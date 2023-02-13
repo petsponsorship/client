@@ -1,8 +1,10 @@
 import React from 'react';
 import styles from '../../styles/Detail.module.css';
+import ProgressBar from '../../component/ui/ProgressBar';
 
 function Detail() {
   const arr = [1, 2, 3, 4];
+  const bar = 30;
 
   return (
     <main className={styles.main}>
@@ -37,6 +39,11 @@ function Detail() {
         <div className={styles.flexdiv}>
           <p>의료비 후원</p>
           <p>300,000원</p>
+        </div>
+        <ProgressBar value={bar} />
+        <div className={styles.flexdiv}>
+          <p>70명이 후원했어요!</p>
+          <p>{bar}% 달성</p>
         </div>
       </section>
     </main>
