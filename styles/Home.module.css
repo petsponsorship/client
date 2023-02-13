@@ -35,3 +35,23 @@ border-top-right-radius: 10px;
 .line {
   margin-top: 8vh;
 }
+
+.selectDiv{
+  display: flex;
+  float: right;
+  margin-right: 5vw;
+  margin-top: 1vh;
+  font-size: 15px;
+}
+
+.selectlist {
+   display: flex;
+   margin-left:2vw;
+   font-size: 15px;
+   color: gray;
+
+}
+
+.select {
+  display: inline-flex;
+}
