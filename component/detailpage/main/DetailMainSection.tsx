@@ -12,6 +12,11 @@ function DetailMainSection() {
           className={styles.thumbnail}
           src="https://www.wooripet.co.kr/data/file/come3/thumb-1948775479_b24FmajJ_EF1D7C03-7C6C-4B6C-8C4E-C364005AFA68-74120D00-ED9F-463E-8221-7E53CEBBDE93_1400x933.jpg"
         />
+        <div className={styles.editSection}>
+          <p>수정</p>
+          <span>|</span>
+          <p>삭제</p>
+        </div>
       </div>
       <section className={styles.rightsection}>
         <div className={styles.flexdiv}>
