@@ -19,8 +19,8 @@ function login () {
         <button className={styles.loginbtn}>카카오로그인</button>
         </form>
 
-        {/* <p>아직 댕도네냥 계정이 없나요?</p>
-        <a>회원가입</a> */}
+        <p className={styles.bottomsg}>아직 댕도네냥 계정이 없나요? <a href="/signup" className={styles.signupbtn}>회원가입</a></p>
+       
     </div>)
 }
 

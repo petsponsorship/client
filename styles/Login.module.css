@@ -1,5 +1,4 @@
 .logincontainer {
-    display: flex;
     align-items: center;
     width: 30vw;
      height: 70vh;
@@ -49,4 +48,15 @@
     border-radius: 6px;
     margin: 2vh 0; 
     background-color: #FBA7A7;
+}
+
+.bottomsg {
+    margin: 2vh 5vw;
+    font-size: smaller;
+}
+
+.signupbtn {
+    margin-left: 6px;
+    text-decoration : underline;
+    color: #00c4c4;
 }

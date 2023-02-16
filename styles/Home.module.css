@@ -6,52 +6,49 @@
 
 
 .list {
-  display: flex;
-  float: right;
-  /* font-size: 22px; */
-  margin-bottom: 10vh;
-  position: absolute;
-  right: 10px;
-  top: 55vh;
+display: flex;
+align-items: center;
+margin:2vh 38%;
 }
 
 .categorybtn {
   width: 6vw;
   height: 5vh;
-  border-style: solid;
-  border-top-left-radius: 10px;
-border-top-right-radius: 10px;
-  border-bottom: none;
-  margin-right: 2vw;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-
-}
-.clicked {
-  color: gold;
+  margin-left: 10px;
+  margin-bottom: 2vh;
+  border:none;
+  border-radius: 10px;
 }
 
-.line {
-  margin-top: 8vh;
-}
 
 .selectDiv{
   display: flex;
-  float: right;
-  margin-right: 5vw;
-  margin-top: 1vh;
-  font-size: 15px;
+  width: 70%;
+  align-items: center;
+  margin: 2vh auto;
+}
+.filterTitle {
+  margin-right: auto;
 }
 
 .selectlist {
    display: flex;
    margin-left:2vw;
-   font-size: 15px;
+   font-size: regular;
    color: gray;
-
 }
 
 .select {
-  display: inline-flex;
+  display:flex;
+}
+
+.cardsection {
+  width: 80%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-row-gap: 1rem;
+  height: auto;
+  overflow-x:hidden; 
+  overflow-y:auto;
 }
