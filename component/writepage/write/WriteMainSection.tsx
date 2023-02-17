@@ -21,6 +21,10 @@ function WriteMainSection() {
           <span>❗️ 후원은 등록일로부터 2주간 유지됩니다</span>
         </div>
         <div className={styles.flexdiv}>
+          <p>이름</p>
+          <input type="text" />
+        </div>
+        <div className={styles.flexdiv}>
           <p>나이</p>
           <input type="number" />
           <span>
@@ -46,7 +50,6 @@ function WriteMainSection() {
             <option value="cat">고양이</option>
             <option value="etc">기타</option>
           </select>
-          <span>❗️ 후원은 등록일로부터 2주간 유지됩니다</span>
         </div>
         <div className={styles.flexdiv}>
           <p>성별</p>
@@ -66,9 +69,6 @@ function WriteMainSection() {
           <p>목표 금액</p>
           <input type="number" name="goal" />
         </div>
-        <label>
-          <input type="checkbox" name="neutering" value="true" /> 입양문의 받기
-        </label>
         <div className={styles.flexdiv}>
           <p>후원 목적</p>
           <select name="purpose">
@@ -77,6 +77,9 @@ function WriteMainSection() {
             <option value="식비">식비</option>
             <option value="기타">기타</option>
           </select>
+          <label>
+            <input type="checkbox" name="neutering" value="true" /> 입양문의 받기
+          </label>
         </div>
         <section className={styles.btnSection}>
           <button>작성 완료</button>
