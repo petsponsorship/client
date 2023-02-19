@@ -1,27 +1,27 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
 import Card from '../component/Card.tsx';
-import axios from 'axios';
 import CategoryTag from '../component/CategoryTag.jsx';
 import { useRecoilState } from 'recoil';
 import { categoryFilterState } from '../store/CategoryList.ts';
+import { fetchCategoryData } from '../apis/getMaindata.ts';
 
 function Main() {
   const [cards, setCards] = useState([]);
-
-  async function fetchcateData(species) {
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/posts?species=${species}`);
-    setCards(res.data);
-  }
+  const [category, setCategory] = useRecoilState(categoryFilterState);
 
   useEffect(() => {
-    fetchcateData('전체');
+    const maindata = async () => {
+      const res = await fetchCategoryData('전체');
+      setCards(res);
+    };
+    maindata();
   }, []);
 
-  const [category, setCategory] = useRecoilState(categoryFilterState);
-  const onSelect = useCallback((cateName) => {
+  const onSelect = useCallback(async (cateName) => {
+    const res = await fetchCategoryData(cateName);
+    setCards(res);
     setCategory(cateName);
-    fetchcateData(cateName);
   }, []);
 
   return (
