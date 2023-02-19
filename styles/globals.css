@@ -32,3 +32,8 @@ ul {
   padding: 0;
   list-style: none;
 }
+
+Input[type='radio'],
+Input[type='checkbox'] {
+  accent-color: black;
+}

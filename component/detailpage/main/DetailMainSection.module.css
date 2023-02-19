@@ -22,6 +22,9 @@
 .rightsection {
   width: 60vw;
   padding: 0 1rem 0 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .flexdiv {
