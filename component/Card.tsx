@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../styles/Card.module.css"
 
+
 function Card({list}) {
     const speciesIcon = (species) => {
         if( species === "강아지") {
@@ -13,7 +14,6 @@ function Card({list}) {
     }
     
 
-    console.log(list)
 
     return (<div className={styles.cardContainer}> 
         <img

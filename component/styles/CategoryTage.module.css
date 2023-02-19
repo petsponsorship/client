@@ -1,0 +1,29 @@
+.list {
+    display: flex;
+    align-items: center;
+    margin:2vh 38%;
+    }
+    
+    .categorybtn {
+      width: 6vw;
+      height: 5vh;
+      margin-left: 10px;
+      margin-bottom: 2vh;
+      border:none;
+      border-radius: 10px;
+    }
+
+    .categorybtn:hover {
+        color: #495057;
+    }
+
+    .pickcategory{
+        width: 6vw;
+        height: 5vh;
+        margin-left: 10px;
+        margin-bottom: 2vh;
+        border: #FBA7A7;
+        border-radius: 10px;
+        background-color: #FBA7A7;
+    }
+    

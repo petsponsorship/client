@@ -31,16 +31,20 @@
 }
 
 .loginbtn {
-    width: 5vw;
+    width: 7vw;
     height: 5vh;
     margin: auto auto;
     background-color:white;
     border: none;
     border-radius: 5px;
+    @media screen and (max-width: 952px) {
+        width: 10vw;
+        overflow-x: auto;
+      }
 }
 
 .postbtn {
-    width: 5vw;
+    width: 7vw;
     height: 5vh;
     margin: auto auto;
     background-color:#FBA7A7;

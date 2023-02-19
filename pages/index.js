@@ -1,42 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
 import Card from '../component/Card.tsx';
 import axios from 'axios';
+import CategoryTag from '../component/CategoryTag.jsx';
+import { useRecoilState } from 'recoil';
+import { categoryFilterState } from '../store/CategoryList.ts';
 
 function Main() {
-  async function fetchData() {
-    await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/posts`).then((res) => setCards(res.data));
+  const [cards, setCards] = useState([]);
+
+  async function fetchcateData(species) {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/posts?species=${species}`);
+    setCards(res.data);
   }
 
-  const [cards, setCards] = useState([]);
   useEffect(() => {
-    fetchData();
+    fetchcateData('전체');
   }, []);
-  console.log('card===', cards);
+
+  const [category, setCategory] = useRecoilState(categoryFilterState);
+  const onSelect = useCallback((cateName) => {
+    setCategory(cateName);
+    fetchcateData(cateName);
+  }, []);
 
   return (
     <article>
       <div className={styles.adbox}>슬라이드</div>
       <section>
-        <div className={styles.categorybox}>
-          <ul className={styles.list}>
-            <li>
-              <button className={styles.categorybtn}>전체</button>
-            </li>
-            <li>
-              <button className={styles.categorybtn}>강아지</button>
-            </li>
-            <li>
-              <button className={styles.categorybtn}>고양이</button>
-            </li>
-            <li>
-              <button className={styles.categorybtn}>기타</button>
-            </li>
-          </ul>
-        </div>
-
+        <CategoryTag category={category} onSelect={onSelect} />
         <div className={styles.selectDiv}>
-          <h2 className={styles.fillterTitle}>전체</h2>
+          <h2 className={styles.filterTitle}>{category}</h2>
           <div>
             <input type="checkbox" />
             <span>입양 가능한 아이만 볼래요!</span>
