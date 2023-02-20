@@ -6,10 +6,11 @@
 .thumbnail {
   width: 40vw;
   max-width: 450px;
-  height: 300px;
+  height: 35vh;
+  display: block;
   border-radius: 10px;
   margin-bottom: 5px;
-  object-fit: scale-down;
+  object-fit: cover;
 }
 
 .rightsection {

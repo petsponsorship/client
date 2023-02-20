@@ -41,14 +41,13 @@ function WriteMainSection() {
 
   const [unit, setUnit] = useState<string | undefined>();
 
-  // 이미지를 첨부하려다 취소했을 때 오류 TypeError: Failed to execute 'createObjectURL' on 'URL': Overload resolution failed.
-  let url = 'https://colorate.azurewebsites.net/SwatchColor/D3D3D3';
-  if (watch('thumbnail')) url = URL.createObjectURL(watch('thumbnail')[0]);
+  let url = 'https://liftlearning.com/wp-content/uploads/2020/09/default-image.png';
+  if (watch('thumbnail') && watch('thumbnail').length !== 0) url = URL.createObjectURL(watch('thumbnail')[0]);
 
   return (
     <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
       <section>
-        <img className={styles.thumbnail} src={url} alt="이미지를 첨부해주세요!" />
+        <img className={styles.thumbnail} src={url} />
         <div>
           <input type="file" accept="image/*" {...register('thumbnail', { required: true })} />
         </div>
