@@ -4,11 +4,12 @@
 }
 
 .thumbnail {
-  background-color: lightblue;
   width: 40vw;
   max-width: 450px;
+  height: 300px;
   border-radius: 10px;
   margin-bottom: 5px;
+  object-fit: scale-down;
 }
 
 .rightsection {

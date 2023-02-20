@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 
 function WriteMainSection() {
   interface IFormInput {
-    thumbnail: string;
+    thumbnail: File;
     name: string;
     age: number;
     species: '강아지' | '고양이' | '기타';
@@ -29,6 +29,7 @@ function WriteMainSection() {
     }
 
     data.sex === '0' ? (data.sex = false) : (data.sex = true);
+    data.thumbnail = data.thumbnail[0];
 
     console.log(data);
   };
@@ -40,13 +41,14 @@ function WriteMainSection() {
 
   const [unit, setUnit] = useState<string | undefined>();
 
+  // 이미지를 첨부하려다 취소했을 때 오류 TypeError: Failed to execute 'createObjectURL' on 'URL': Overload resolution failed.
+  let url = 'https://colorate.azurewebsites.net/SwatchColor/D3D3D3';
+  if (watch('thumbnail')) url = URL.createObjectURL(watch('thumbnail')[0]);
+
   return (
     <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
       <section>
-        <img
-          className={styles.thumbnail}
-          src="https://www.wooripet.co.kr/data/file/come3/thumb-1948775479_b24FmajJ_EF1D7C03-7C6C-4B6C-8C4E-C364005AFA68-74120D00-ED9F-463E-8221-7E53CEBBDE93_1400x933.jpg"
-        />
+        <img className={styles.thumbnail} src={url} alt="이미지를 첨부해주세요!" />
         <div>
           <input type="file" accept="image/*" {...register('thumbnail', { required: true })} />
         </div>
