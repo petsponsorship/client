@@ -1,25 +1,24 @@
 import React, { useState } from 'react';
 import styles from '../write/WriteMainSection.module.css';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { AGE_UNIT_ARRAY, SEX_ARRAY } from './constants';
+export interface IFormInput {
+  thumbnail: File;
+  name: string;
+  age: number;
+  species: '강아지' | '고양이' | '기타';
+  etcDetail?: string;
+  sex: '0' | '1' | boolean;
+  neutered: boolean;
+  targetAmount: number;
+  purpose: 'medical' | 'food' | 'care' | 'funeral';
+  adopt: boolean;
+}
 
-function WriteMainSection() {
-  interface IFormInput {
-    thumbnail: File;
-    name: string;
-    age: number;
-    species: '강아지' | '고양이' | '기타';
-    etcDetail?: string;
-    sex: '0' | '1' | boolean;
-    neutered: boolean;
-    targetAmount: number;
-    purpose: 'medical' | 'food' | 'care' | 'funeral';
-    adopt: boolean;
-  }
-
+function WriteMainSection({ jebal }) {
   const today = new Date().toISOString().slice(0, 10);
   const { register, handleSubmit, watch } = useForm<IFormInput>();
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    //DESC: 나이 모름: -1, 개월: 소수점 단위로 변환하여 서버 전송
     if (unit === '-1') {
       data.age = -1;
     } else if (unit === 'month') {
@@ -31,21 +30,17 @@ function WriteMainSection() {
     data.sex === '0' ? (data.sex = false) : (data.sex = true);
     data.thumbnail = data.thumbnail[0];
 
-    console.log(data);
+    jebal(data);
   };
-  const ageUnitArr = [
-    { value: 'month', text: '개월' },
-    { value: 'year', text: '만, 세' },
-    { value: -1, text: '나이 모름' },
-  ];
 
   const [unit, setUnit] = useState<string | undefined>();
 
+  // FIXME: 기존에 첨부된 사진이 있더라도 첨부창을 열었다가 취소하면 휘발되는 문제
   let url = 'https://liftlearning.com/wp-content/uploads/2020/09/default-image.png';
   if (watch('thumbnail') && watch('thumbnail').length !== 0) url = URL.createObjectURL(watch('thumbnail')[0]);
 
   return (
-    <form className={styles.container} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.container} id="write" onSubmit={handleSubmit(onSubmit)}>
       <section>
         <img className={styles.thumbnail} src={url} />
         <div>
@@ -68,7 +63,7 @@ function WriteMainSection() {
           <p>나이</p>
           <input type="number" disabled={unit === '-1'} {...register('age', { valueAsNumber: true, max: 30 })} />
           <span>
-            {ageUnitArr.map((obj) => (
+            {AGE_UNIT_ARRAY.map((obj) => (
               <label key={obj.value}>
                 <input type="radio" name="unit" value={obj.value} onChange={(e) => setUnit(e.target.value)} required />
                 {obj.text}
@@ -79,7 +74,7 @@ function WriteMainSection() {
         {/* 축종 */}
         <div className={styles.flexdiv}>
           <p>종 선택</p>
-          <select name="species" {...register('species', { required: true })}>
+          <select name="species" {...register('species')} required>
             <option value="">종을 선택해주세요!</option>
             <option value="강아지">강아지</option>
             <option value="고양이">고양이</option>
@@ -90,14 +85,12 @@ function WriteMainSection() {
         {/* 성별 */}
         <div className={styles.flexdiv}>
           <p>성별</p>
-          <label>
-            <input type="radio" name="sex" value={0} {...register('sex')} />
-            남아
-          </label>
-          <label>
-            <input type="radio" name="sex" value={1} {...register('sex')} />
-            여아
-          </label>
+          {SEX_ARRAY.map((sex) => (
+            <label key={sex.group}>
+              <input type="radio" name="sex" value={sex.value} {...register('sex')} required />
+              {sex.group}
+            </label>
+          ))}
           {/* 중성화 여부 */}
           <label>
             <input type="checkbox" {...register('neutered')} /> 중성화 여부
@@ -112,12 +105,12 @@ function WriteMainSection() {
         {/* 후원 목적 */}
         <div className={styles.flexdiv}>
           <p>후원 목적</p>
-          <select name="purpose" {...register('purpose', { required: true })}>
+          <select name="purpose" {...register('purpose')} required>
             <option value="">후원목적을 선택해주세요!</option>
-            <option value="의료비">의료비</option>
-            <option value="사료 및 간식">사료 및 간식</option>
-            <option value="용품비">용품비</option>
-            <option value="장례비">장례비</option>
+            <option value="medical">의료비</option>
+            <option value="food">사료 및 간식</option>
+            <option value="care">용품비</option>
+            <option value="funeral">장례비</option>
           </select>
           {/* 입양 가능 여부 */}
           <label>
@@ -125,7 +118,6 @@ function WriteMainSection() {
             입양문의 받기
           </label>
         </div>
-        <input type="submit" />
       </section>
     </form>
   );
