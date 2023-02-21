@@ -1,0 +1,62 @@
+.logincontainer {
+    align-items: center;
+    width: 30vw;
+     height: 70vh;
+     margin:auto;
+     padding: 50px;
+}
+
+.loginform {
+    width: 100%;
+    height: 80%;
+}
+
+.title {
+    margin-bottom: 4vh;
+}
+.email{
+    width: 100%;
+    margin-bottom: 2vh;
+}
+.emailinput {
+ width: 100%;
+ height: 7vh;
+    line-height: 1.2em;
+    font-size: 17px;
+    font-weight: 300;
+    padding: 10px;
+}
+
+.password {
+    width: 100%;
+    margin-bottom: 2vh;
+}
+
+.passwordinput {
+    width: 100%;
+    height: 7vh;
+    line-height: 1.2em;
+    font-size: 17px;
+    font-weight: 300;
+    padding: 10px;
+}
+
+.loginbtn {
+    width:100%;
+    height: 6vh;
+    border: none;
+    border-radius: 6px;
+    margin: 2vh 0; 
+    background-color: #FBA7A7;
+}
+
+.bottomsg {
+    margin: 2vh 5vw;
+    font-size: smaller;
+}
+
+.signupbtn {
+    margin-left: 6px;
+    text-decoration : underline;
+    color: #00c4c4;
+}
