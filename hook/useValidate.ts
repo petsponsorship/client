@@ -5,7 +5,7 @@ import { useState } from "react";
  * @param {"email" || "password"} type
  * @returns
  */
-const useValidate = (type:string):Any => {
+const useValidate = (type:string):any => {
   const [validity, setValidity] = useState(false);
   const [warnList, setWarnList] = useState([]);
 
