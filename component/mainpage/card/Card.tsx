@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Card.module.css"
+import ProgressBar from "../../ui/progressbar/ProgressBar"
 
 
 function Card({list}) {
@@ -12,8 +13,11 @@ function Card({list}) {
             return species
         }
     }
-    
 
+
+const progressbarAmount = (targetAmount, amount) => {
+    return (amount/targetAmount) * 100
+}
 
     return (<div className={styles.cardContainer}> 
         <img
@@ -24,9 +28,7 @@ function Card({list}) {
         <div>
             <span className={styles.participation}>{list.sponsor}명 참여</span>
             <span className={styles.period}> 10일 남음</span>
-            <div className={styles.progress}>
-                <div className={styles.dealt}></div>
-            </div>
+            <ProgressBar value={progressbarAmount(list.targetAmount, list.amount)}/>
             <span className={styles.amount}>{list.targetAmount}</span>
         </div>
         <div className={styles.infobox}>

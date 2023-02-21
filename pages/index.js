@@ -5,10 +5,16 @@ import CategoryTag from '../component/mainpage/category/CategoryTag.jsx';
 import { useRecoilState } from 'recoil';
 import { categoryFilterState } from '../store/CategoryList.ts';
 import { fetchCategoryData } from '../apis/getMaindata.ts';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 function Main() {
   const [cards, setCards] = useState([]);
   const [category, setCategory] = useRecoilState(categoryFilterState);
+
+  const router = useRouter();
+  const { id } = router.query;
+  console.log(id);
 
   useEffect(() => {
     const maindata = async () => {
@@ -24,6 +30,9 @@ function Main() {
     setCategory(cateName);
   }, []);
 
+  const clickdetail = (id) => {
+    router.push(`post/${id}`);
+  };
   return (
     <article>
       <div className={styles.adbox}>슬라이드</div>
