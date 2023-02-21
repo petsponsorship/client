@@ -1,21 +1,48 @@
 import React from "react";
+import { useRouter } from "next/router";
+import { loginApi } from "../apis/auth";
+import useSignForm from "../hook/useSignForm";
 import styles from "../styles/Login.module.css"
 
 
 function login () {
+    const router = useRouter();
+    const {userInfo,
+        handleInputValue,
+        emailIsAbled,
+        emailWarnList,
+        passwordIsAbled,
+        passwordWarnList,} = useSignForm();
+
+
+        const handleLoginClick = () => {
+            loginApi(userInfo.email, userInfo.password)
+            .then((res)=>{
+                console.log(res);
+                localStorage.setItem("token", res.data.token)
+                alert("로그인성공");
+                router.push("/")
+            })
+            .catch((err)=> {
+                alert(err)
+            })
+        }
     return (
     <div className={styles.logincontainer}>
-        <form className={styles.loginform}>
+        <form className={styles.loginform} onSubmit={(e) => e.preventDefault()}>
         <h1 className={styles.title}>로그인</h1>
             <div className={styles.email}>
-                <input type="email" placeholder="이메일 입력" className={styles.emailinput}/>
-                {/* <em>이메일 형식이 올바르지 않습니다.</em> */}
-            </div>
+                <input type="email" placeholder="이메일 입력" className={styles.emailinput} onChange={handleInputValue("email")}/>
+                  {emailWarnList?.map((item) => (
+                      <div key={item}>{item}</div>
+                      ))}            </div>
             <div className={styles.password}>
-                <input type="password" placeholder="비밀번호 입력" className={styles.passwordinput}/>
-                {/* <p> 등록되지 않은 아이디거나, 아이디 또는 비밀번호가 회원정보와 일치하지 않습니다.</p> */}
+                <input type="password" placeholder="비밀번호 입력" className={styles.passwordinput} onChange={handleInputValue("password")}/>
+                {passwordWarnList?.map((item) => (
+                      <div key={item}>{item}</div>
+                      ))}
             </div>
-        <button className={styles.loginbtn}>로그인</button>
+        <button className={styles.loginbtn} onClick={handleLoginClick}>로그인</button>
         <button className={styles.loginbtn}>카카오로그인</button>
         </form>
 
