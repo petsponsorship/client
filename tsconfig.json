@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "component/CategoryTag.jsx"  ],
+, "component/mainpage/category/CategoryTag.jsx", "hook/useSignForm.js"  ],
   "exclude": [
     "node_modules"
   ]

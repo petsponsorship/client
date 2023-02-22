@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './styles/CategoryTage.module.css';
+import styles from './CategoryTage.module.css';
 
 function CategoryTag({ category, onSelect }) {
   const categories = [
