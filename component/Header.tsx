@@ -29,7 +29,7 @@ function Header (){
             로그인
             </button>
             </Link>
-    <button className={styles.postbtn}>{pathname ==="/write" ? "글작성완료" : "글쓰기" }</button>
+    <Link href="/write"><button className={styles.postbtn}>{pathname ==="/write" ? "글작성완료" : "글쓰기" }</button></Link>
     </div>
     </header>)
 }
