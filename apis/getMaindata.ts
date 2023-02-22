@@ -1,6 +1,6 @@
-import axios from 'axios';
+import { instance } from './client';
 
 export const fetchCategoryData = async (species:string) => {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/posts?species=${species}`)
+    const response = await instance.get(`${process.env.NEXT_PUBLIC_API_URL}/posts?species=${species}`)
     return response.data;
 }
