@@ -3,9 +3,13 @@ import { useRouter } from "next/router";
 import { loginApi } from "../apis/auth";
 import useSignForm from "../hook/useSignForm";
 import styles from "../styles/Login.module.css"
+import { useCookies } from "react-cookie"
 
 
 function login () {
+
+    const [cookie, setCookie] = useCookies(["user"])
+
     const router = useRouter();
     const {userInfo,
         handleInputValue,
@@ -18,8 +22,9 @@ function login () {
         const handleLoginClick = () => {
             loginApi(userInfo.email, userInfo.password)
             .then((res)=>{
-                console.log(res);
-                localStorage.setItem("token", res.data.token)
+                 console.log(res.data.token);
+                setCookie("user", JSON.stringify(res.data.token), {
+                });
                 alert("로그인성공");
                 router.push("/")
             })
