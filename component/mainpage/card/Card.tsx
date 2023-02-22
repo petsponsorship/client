@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Card.module.css"
 import ProgressBar from "../../ui/progressbar/ProgressBar"
+import Link from "next/link";
 
 
 function Card({list}) {
@@ -19,7 +20,11 @@ const progressbarAmount = (targetAmount, amount) => {
     return (amount/targetAmount) * 100
 }
 
-    return (<div className={styles.cardContainer}> 
+    return (
+        <Link href={{
+            pathname: `/post/${list.id}`
+        }}>
+    <div className={styles.cardContainer}> 
         <img
         className={styles.titleimg}
         alt="preview"
@@ -37,7 +42,8 @@ const progressbarAmount = (targetAmount, amount) => {
             <p className={styles.name}>{list.name}&nbsp;</p>
             <div>{speciesIcon(list.species)}</div>
         </div>
-    </div>)
+    </div>
+    </Link>)
 }
 
 export default Card; 
