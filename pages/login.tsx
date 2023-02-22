@@ -3,12 +3,11 @@ import { useRouter } from "next/router";
 import { loginApi } from "../apis/auth";
 import useSignForm from "../hook/useSignForm";
 import styles from "../styles/Login.module.css"
-import { useCookies } from "react-cookie"
+import {setCookie} from "../hook/cookies"
 
 
 function login () {
 
-    const [cookie, setCookie] = useCookies(["user"])
 
     const router = useRouter();
     const {userInfo,
