@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
-import Card from '../component/Card.tsx';
-import CategoryTag from '../component/CategoryTag.jsx';
+import Card from '../component/mainpage/card/Card.tsx';
+import CategoryTag from '../component/mainpage/category/CategoryTag.jsx';
 import { useRecoilState } from 'recoil';
 import { categoryFilterState } from '../store/CategoryList.ts';
 import { fetchCategoryData } from '../apis/getMaindata.ts';
