@@ -13,7 +13,7 @@ instance.interceptors.request.use((config) =>{
     const token = getCookie("user")
 
     if(token && config.headers) {
-        config.headers["token"] = `Bearer ${token}`;
+        config.headers["Authorization"] = `${token}`;
     }
     return config;
 })

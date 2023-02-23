@@ -5,6 +5,11 @@ import Link from "next/link";
 
 
 function Card({list}) {
+
+    console.log("카드데이터", list)
+
+    // expiredDesc: 'date' | 'amount
+    // null이 아닐때 삼항연산자 널일때 컨테이너 삼항연산자 보여주기
     const speciesIcon = (species) => {
         if( species === "강아지") {
             return "🐶"
@@ -20,7 +25,8 @@ const progressbarAmount = (targetAmount, amount) => {
     return (amount/targetAmount) * 100
 }
 
-    return (
+    return (<>
+        {list?.expiredDesc === null ? 
         <Link href={{
             pathname: `/post/${list.id}`
         }}>
@@ -43,7 +49,11 @@ const progressbarAmount = (targetAmount, amount) => {
             <div>{speciesIcon(list.species)}</div>
         </div>
     </div>
-    </Link>)
+    </Link> :
+    <div>background grey 가 들어갑니다.</div> 
+    }
+        
+    </>)
 }
 
 export default Card; 

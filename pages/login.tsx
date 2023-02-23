@@ -22,7 +22,7 @@ function login () {
             loginApi(userInfo.email, userInfo.password)
             .then((res)=>{
                  console.log(res.data.token);
-                setCookie("user", JSON.stringify(res.data.token), {
+                setCookie("Authorization", JSON.stringify(res.data.token), {
                 });
                 alert("로그인성공");
                 router.push("/")

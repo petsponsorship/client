@@ -6,7 +6,7 @@ import { useState } from 'react';
 import '../styles/globals.css';
 import 'react-quill/dist/quill.snow.css';
 import Header from '../component/Header';
-import { parseCookies } from "../helpers/"
+
 
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -25,17 +25,3 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 export default MyApp;
 
-MyApp.getServerSideProps = async ({ req, res }) => {
-  const data = parseCookies(req)
-  
-   if (res) {
-    if (Object.keys(data).length === 0 && data.constructor === Object) {
-      res.writeHead(301, { Location: "/" })
-      res.end()
-    }
-  }
-  
-  return {
-    data: data && data,
-  }
-}
