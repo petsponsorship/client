@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 export default MyApp;
 
-MyApp.getStaticProps = async ({ req, res }) => {
+MyApp.getServerSideProps = async ({ req, res }) => {
   const data = parseCookies(req)
   
    if (res) {
