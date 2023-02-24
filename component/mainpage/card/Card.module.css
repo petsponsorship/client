@@ -9,6 +9,36 @@
 
 }
 
+
+.dateContainer {
+    width: 16vw;
+    height: 40vh;
+    border-radius: 10px;
+}
+
+.dateContainer::after {
+    width: 16vw;
+    height: 40vh;
+    content: "";
+    border-radius: 10px;
+    background-color: grey; 
+    opacity: 0.5;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.expirereson {
+ font-size: small;
+}
+
+.noticeexpire {
+    position: relative;
+    bottom: 40%;
+    text-align: center;
+    z-index: 999;
+}
+
 .cardContainer:hover {
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }

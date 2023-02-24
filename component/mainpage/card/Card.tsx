@@ -8,8 +8,6 @@ function Card({list}) {
 
     console.log("카드데이터", list)
 
-    // expiredDesc: 'date' | 'amount
-    // null이 아닐때 삼항연산자 널일때 컨테이너 삼항연산자 보여주기
     const speciesIcon = (species) => {
         if( species === "강아지") {
             return "🐶"
@@ -26,7 +24,7 @@ const progressbarAmount = (targetAmount, amount) => {
 }
 
     return (<>
-        {list?.expiredDesc === null ? 
+        {list?.expired === 0 ? 
         <Link href={{
             pathname: `/post/${list.id}`
         }}>
@@ -50,7 +48,38 @@ const progressbarAmount = (targetAmount, amount) => {
         </div>
     </div>
     </Link> :
-    <div>background grey 가 들어갑니다.</div> 
+    <> 
+    <Link href={{
+            pathname: `/post/${list.id}`
+        }}>
+             <div className={styles.cardContainer}> 
+            <section className = {styles.dateContainer}>
+        <img
+        className={styles.titleimg}
+        alt="preview"
+        src={list.thumbnail}
+        />
+        <div  className={styles.noticeexpire}>
+        <p>후원종료</p>
+        <p className = {styles.expirereson}>(사유: {list?.expiredDesc ==="amount"? "목표금액달성" : "후원기간종료"})</p>
+        </div>
+               
+        <div>
+            <span className={styles.participation}>{list.sponsor}명 참여</span>
+            <span className={styles.period}> 10일 남음</span>
+            <ProgressBar value={progressbarAmount(list.targetAmount, list.amount)}/>
+            <span className={styles.amount}>{list.targetAmount}</span>
+        </div>
+        <div className={styles.infobox}>
+            <p className={styles.info}>{list.sex === 0 ? "남아" : "여아"}&nbsp;&nbsp;</p>
+            <p className={styles.info}>{list.age}세 &nbsp;&nbsp;</p>
+            <p className={styles.name}>{list.name}&nbsp;</p>
+            <div>{speciesIcon(list.species)}</div>
+        </div>
+    </section>
+    </div>
+    </Link> 
+    </>
     }
         
     </>)
