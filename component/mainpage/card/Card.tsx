@@ -2,11 +2,11 @@ import React from "react";
 import styles from "./Card.module.css"
 import ProgressBar from "../../ui/progressbar/ProgressBar"
 import Link from "next/link";
+import { dateForm } from "../../../util/dateForm";
+import { priceForm } from "../../../util/priceForm"
 
 
 function Card({list}) {
-
-    console.log("카드데이터", list)
 
     const speciesIcon = (species) => {
         if( species === "강아지") {
@@ -36,9 +36,9 @@ const progressbarAmount = (targetAmount, amount) => {
         />
         <div>
             <span className={styles.participation}>{list.sponsor}명 참여</span>
-            <span className={styles.period}> 10일 남음</span>
+            <span className={styles.period}> {dateForm(list.createdAt)}일 남음</span>
             <ProgressBar value={progressbarAmount(list.targetAmount, list.amount)}/>
-            <span className={styles.amount}>{list.targetAmount}</span>
+            <span className={styles.amount}>{priceForm(list.targetAmount)}원</span>
         </div>
         <div className={styles.infobox}>
             <p className={styles.info}>{list.sex === 0 ? "남아" : "여아"}&nbsp;&nbsp;</p>
@@ -66,9 +66,9 @@ const progressbarAmount = (targetAmount, amount) => {
                
         <div>
             <span className={styles.participation}>{list.sponsor}명 참여</span>
-            <span className={styles.period}> 10일 남음</span>
+            <span className={styles.period}>{dateForm(list.createdAt)}남음</span>
             <ProgressBar value={progressbarAmount(list.targetAmount, list.amount)}/>
-            <span className={styles.amount}>{list.targetAmount}</span>
+            <span className={styles.amount}>{priceForm(list.targetAmount)}원</span>
         </div>
         <div className={styles.infobox}>
             <p className={styles.info}>{list.sex === 0 ? "남아" : "여아"}&nbsp;&nbsp;</p>
