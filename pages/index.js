@@ -1,14 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
 import Card from '../component/mainpage/card/Card.tsx';
-import CategoryTag from '../component/mainpage/category/CategoryTag.jsx';
-import { useRecoilState } from 'recoil';
-import { categoryFilterState } from '../store/CategoryList.ts';
+import CategoryTag from '../component/mainpage/category/CategoryTag.tsx';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { categoryFilterState, getCardSelector } from '../store/CategoryList.ts';
 import { fetchCategoryData } from '../apis/getMaindata.ts';
 
 function Main() {
   const [cards, setCards] = useState([]);
   const [category, setCategory] = useRecoilState(categoryFilterState);
+  const [filterState, setFilterState] = useState();
+  const cardValue = useRecoilValue(getCardSelector);
+  console.log('리코일셀렉터-->', cardValue);
 
   useEffect(() => {
     const maindata = async () => {
@@ -24,38 +27,69 @@ function Main() {
     setCategory(cateName);
   }, []);
 
+  //메인 필터링 기능
+  //1.최신순정렬
+  const newestFilter = () => {
+    const sorted = [...cards].slice(0).sort((a, b) => {
+      return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf();
+    });
+    setCards(sorted);
+    setFilterState('newest');
+  };
+
+  //오래된순
+  const imminentFilter = () => {
+    const sort = [...cards].slice(0).sort((a, b) => {
+      return new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf();
+    });
+    setCards(sort);
+    setFilterState('imminent');
+  };
+
+  //응원순
+
   return (
-    <article>
-      <div className={styles.adbox}>슬라이드</div>
-      <section>
-        <CategoryTag category={category} onSelect={onSelect} />
-        <div className={styles.selectDiv}>
-          <h2 className={styles.filterTitle}>{category}</h2>
-          <div>
-            <input type="checkbox" />
-            <span>입양 가능한 아이만 볼래요!</span>
+    <Suspense fallback={<div>Loading...</div>}>
+      <article>
+        <div className={styles.adbox}>슬라이드</div>
+        <section>
+          <CategoryTag category={category} onSelect={onSelect} />
+          <div className={styles.selectDiv}>
+            <h2 className={styles.filterTitle}>{category}</h2>
+            <div>
+              <input type="checkbox" />
+              <span>입양 가능한 아이만 볼래요!</span>
+            </div>
+            <ul className={styles.selectlist}>
+              <li>
+                <span
+                  className={filterState === 'imminent' ? styles.isSelected : styles.select}
+                  onClick={() => imminentFilter()}>
+                  마감임박순
+                </span>
+              </li>
+              <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+              <li>
+                <span
+                  className={filterState === 'newest' ? styles.isSelected : styles.select}
+                  onClick={() => newestFilter()}>
+                  최신순
+                </span>
+              </li>
+              <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+              <li>
+                <span className={styles.select}> 응원순</span>
+              </li>
+            </ul>
           </div>
-          <ul className={styles.selectlist}>
-            <li>
-              <span className={styles.select}>마감임박순</span>
-            </li>
-            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <li>
-              <span className={styles.select}> 최신순</span>
-            </li>
-            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-            <li>
-              <span className={styles.select}> 응원순</span>
-            </li>
-          </ul>
-        </div>
-      </section>
-      <section className={styles.cardsection}>
-        {cards?.map((card) => (
-          <Card key={card.id} list={card} />
-        ))}
-      </section>
-    </article>
+        </section>
+        <section className={styles.cardsection}>
+          {cards?.map((card) => (
+            <Card key={card.id} list={card} />
+          ))}
+        </section>
+      </article>
+    </Suspense>
   );
 }
 
