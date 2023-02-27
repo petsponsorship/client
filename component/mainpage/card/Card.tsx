@@ -42,7 +42,7 @@ const progressbarAmount = (targetAmount, amount) => {
         </div>
         <div className={styles.infobox}>
             <p className={styles.info}>{list.sex === 0 ? "남아" : "여아"}&nbsp;&nbsp;</p>
-            <p className={styles.info}>{list.age}세 &nbsp;&nbsp;</p>
+            <p className={styles.info}>{list.age=== -1 ? "모름" : list.age}세 &nbsp;&nbsp;</p>
             <p className={styles.name}>{list.name}&nbsp;</p>
             <div>{speciesIcon(list.species)}</div>
         </div>
@@ -72,7 +72,7 @@ const progressbarAmount = (targetAmount, amount) => {
         </div>
         <div className={styles.infobox}>
             <p className={styles.info}>{list.sex === 0 ? "남아" : "여아"}&nbsp;&nbsp;</p>
-            <p className={styles.info}>{list.age}세 &nbsp;&nbsp;</p>
+            <p className={styles.info}>{list.age=== -1 ? "모름" : list.age}세 &nbsp;&nbsp;</p>
             <p className={styles.name}>{list.name}&nbsp;</p>
             <div>{speciesIcon(list.species)}</div>
         </div>

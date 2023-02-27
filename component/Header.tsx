@@ -8,7 +8,6 @@ function Header (){
     const router = useRouter();
     const pathname = router.pathname;
     const [headerLoginBtn, setHeaderLoginBtn] = useState(getCookie("Authorization") ? true : false);
-    console.log(headerLoginBtn);
 
 
     return (<header className={styles.container}>
@@ -18,19 +17,19 @@ function Header (){
     <div className={styles.btnbox}>
     <button className={styles.bellbtn}>🔔</button>
         { headerLoginBtn ? 
-           <button className={styles.loginbtn}>
+           <div className={styles.loginbtn}>
            로그아웃
-           </button>
+           </div>
         :
  
         <Link href="/login" className={styles.loginbtn}>
-        <button className={styles.loginbtn}>
+        <div className={styles.loginbtn}>
             로그인
-            </button>
+            </div>
             </Link>
     }
     <Link href="/write"><button className={styles.postbtn}>{pathname ==="/write" ? "글작성완료" : "글쓰기" }</button></Link>
-    </div>
+    </div>x
     </header>)
 }
 
