@@ -16,6 +16,7 @@ function Header (){
         </Link>
     <div className={styles.btnbox}>
     <button className={styles.bellbtn}>🔔</button>
+    <div>
         { headerLoginBtn ? 
            <div className={styles.loginbtn}>
            로그아웃
@@ -28,6 +29,7 @@ function Header (){
             </div>
             </Link>
     }
+    </div>
     <Link href="/write"><button className={styles.postbtn}>{pathname ==="/write" ? "글작성완료" : "글쓰기" }</button></Link>
     </div>x
     </header>)
