@@ -12,7 +12,7 @@ function Detail() {
 
   return (
     <>
-      {data ? <DetailMainSection data={data} /> : null}
+      {data && <DetailMainSection data={data} />}
       <hr />
     </>
   );
