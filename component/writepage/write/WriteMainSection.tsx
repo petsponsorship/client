@@ -13,9 +13,10 @@ export interface IFormInput {
   targetAmount: number;
   purpose: 'medical' | 'food' | 'care' | 'funeral';
   adopt: boolean;
+  content: string;
 }
 
-function WriteMainSection({ jebal }) {
+function WriteMainSection({ mutate }) {
   const today = new Date().toISOString().slice(0, 10);
   const { register, handleSubmit, watch } = useForm<IFormInput>();
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
@@ -30,7 +31,7 @@ function WriteMainSection({ jebal }) {
     data.sex === '0' ? (data.sex = false) : (data.sex = true);
     data.thumbnail = data.thumbnail[0];
 
-    jebal(data);
+    mutate(data);
   };
 
   const [unit, setUnit] = useState<string | undefined>();

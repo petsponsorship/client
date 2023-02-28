@@ -2,12 +2,12 @@ import axios from "axios";
 import { getCookie, setCookie } from "../hook/cookies"
 
 export const instance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
-    headers: {
-        "Content-Type": "application/json",
-        withCredentials: true,
-    }
-})
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+    withCredentials: true,
+  },
+});
 
 instance.interceptors.request.use((config) =>{
     if(!config.headers) return config;
