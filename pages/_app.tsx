@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RecoilRoot } from 'recoil';
 import { useState } from 'react';
 import '../styles/globals.css';
-import 'react-quill/dist/quill.snow.css';
 import Header from '../component/Header';
 
 

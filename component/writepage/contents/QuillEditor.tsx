@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import styles from '../contents/QuillEditor.module.css';
+import 'react-quill/dist/quill.snow.css';
 
 const QuillEditor = dynamic(() => import('react-quill'), {
   ssr: false,
