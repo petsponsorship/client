@@ -4,8 +4,10 @@ import QuillEditor from '../../component/writepage/contents/QuillEditor';
 import { IFormInput } from '../../component/writepage/write/WriteMainSection';
 import { useMutation } from '@tanstack/react-query';
 import { parseCookies } from "../../helpers"
+import { cookieStringToObject } from '../../util/cookieStringToObject';
 
-function WritePage() {
+function WritePage({token}) {
+  console.log(token)
   const [html, setHtml] = useState('');
 
   const api = (form: IFormInput) => {
@@ -27,18 +29,33 @@ function WritePage() {
 export default WritePage;
 
 //토큰이 있는지 확인합니다.
-WritePage.getServerSideProps = async ({ req, res }) => {
-  const data = parseCookies(req)
+// export const getServerSideProps = async (context) => {
+//   const cookie = context.req ? context.req.headers.cookie : "";
+//   const token = cookieStringToObject(cookie);
+
+//   const accessToken = token.Authorization;
+//   const refreshToken = token.refreshToken;
+
+//   if(accessToken === !null) {
+//     const refreshTokenBycookie = token.refreshToken || "";
+//   }
+
+//   return {
+//     props : {
+//       token
+//     }
+//   }
+  // const data = parseCookies(req)
   
-   if (res) {
-    if (Object.keys(data).length === 0 && data.constructor === Object) {
-      res.writeHead(301, { Location: "/" })
-      res.end()
-    }
-  }
+  //  if (res) {
+  //   if (Object.keys(data).length === 0 && data.constructor === Object) {
+  //     res.writeHead(301, { Location: "/" })
+  //     res.end()
+  //   }
+  // }
   
-  return {
-    data: data && data,
-  }
-}
+  // return {
+  //   data: data && data,
+  // }
+// }
 

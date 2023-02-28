@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/Header.module.css"
 import Link from 'next/link';
 import { useRouter } from "next/router";
@@ -7,7 +7,15 @@ import { getCookie, removeCookie } from "../hook/cookies";
 function Header (){
     const router = useRouter();
     const pathname = router.pathname;
-    const [headerLoginBtn, setHeaderLoginBtn] = useState(getCookie("Authorization") ? true : false);
+    const [headerLoginBtn, setHeaderLoginBtn] = useState<boolean>();
+
+    useEffect(()=>{
+        if(!getCookie("Authorization")){ return setHeaderLoginBtn(false)}
+        else {
+            setHeaderLoginBtn(true)
+        }
+        
+    },[])
 
 
     return (<header className={styles.container}>
@@ -27,11 +35,11 @@ function Header (){
         <div className={styles.loginbtn}>
             로그인
             </div>
-            </Link>
+        </Link>
     }
     </div>
     <Link href="/write"><button className={styles.postbtn}>{pathname ==="/write" ? "글작성완료" : "글쓰기" }</button></Link>
-    </div>x
+    </div>
     </header>)
 }
 
