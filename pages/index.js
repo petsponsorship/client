@@ -5,24 +5,32 @@ import CategoryTag from '../component/mainpage/category/CategoryTag.tsx';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { categoryFilterState, getCardSelector } from '../store/CategoryList.ts';
 import { fetchCategoryData } from '../apis/getMaindata.ts';
+import { useRouter } from 'next/router';
 
 function Main() {
   const [cards, setCards] = useState([]);
   const [category, setCategory] = useRecoilState(categoryFilterState);
+  const router = useRouter();
   const [filterState, setFilterState] = useState();
-  const cardValue = useRecoilValue(getCardSelector);
-  console.log('리코일셀렉터-->', cardValue);
+
+  const categoryName = Object.keys(router.query)[0];
 
   useEffect(() => {
     const maindata = async () => {
+      setCategory(categoryName);
       const res = await fetchCategoryData('전체');
+      console.log(res);
       setCards(res);
     };
+
     maindata();
   }, []);
 
   const onSelect = useCallback(async (cateName) => {
-    const res = await fetchCategoryData(cateName);
+    await router.push({
+      query: cateName,
+    });
+    const res = await fetchCategoryData(cateName || '전체');
     setCards(res);
     setCategory(cateName);
   }, []);
