@@ -21,7 +21,6 @@ function login () {
         const handleLoginClick = () => {
             loginApi(userInfo.email, userInfo.password)
             .then((res)=>{
-                 console.log(res.data)
                 setCookie("Authorization", res.data.accessToken, {});
                 setCookie("refreshToken", res.data.refreshToken, {})
                 setCookie("userId", res.data.userId, {})
