@@ -21,6 +21,11 @@
    font-size: regular;
    color: gray;
 }
+.isSelected {
+  display:flex;
+  color:black;
+  font-weight: bolder;
+}
 
 .select {
   display:flex;
