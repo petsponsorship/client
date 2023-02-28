@@ -7,19 +7,18 @@ import { categoryFilterState, getCardSelector } from '../store/CategoryList.ts';
 import { fetchCategoryData } from '../apis/getMaindata.ts';
 import { useRouter } from 'next/router';
 
-function Main() {
+function Main({ data }) {
   const [cards, setCards] = useState([]);
   const [category, setCategory] = useRecoilState(categoryFilterState);
-  const router = useRouter();
   const [filterState, setFilterState] = useState();
 
+  const router = useRouter();
   const categoryName = Object.keys(router.query)[0];
 
   useEffect(() => {
     const maindata = async () => {
-      setCategory(categoryName);
       const res = await fetchCategoryData('전체');
-      console.log(res);
+      setCategory(categoryName);
       setCards(res);
     };
 
@@ -57,48 +56,56 @@ function Main() {
   //응원순
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <article>
-        <div className={styles.adbox}>슬라이드</div>
-        <section>
-          <CategoryTag category={category} onSelect={onSelect} />
-          <div className={styles.selectDiv}>
-            <h2 className={styles.filterTitle}>{category}</h2>
-            <div>
-              <input type="checkbox" />
-              <span>입양 가능한 아이만 볼래요!</span>
-            </div>
-            <ul className={styles.selectlist}>
-              <li>
-                <span
-                  className={filterState === 'imminent' ? styles.isSelected : styles.select}
-                  onClick={() => imminentFilter()}>
-                  마감임박순
-                </span>
-              </li>
-              <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-              <li>
-                <span
-                  className={filterState === 'newest' ? styles.isSelected : styles.select}
-                  onClick={() => newestFilter()}>
-                  최신순
-                </span>
-              </li>
-              <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-              <li>
-                <span className={styles.select}> 응원순</span>
-              </li>
-            </ul>
+    // <Suspense fallback={<div>Loading...</div>}>
+    <article>
+      <div className={styles.adbox}>슬라이드</div>
+      <section>
+        <CategoryTag category={category} onSelect={onSelect} />
+        <div className={styles.selectDiv}>
+          <h2 className={styles.filterTitle}>{category}</h2>
+          <div>
+            <input type="checkbox" />
+            <span>입양 가능한 아이만 볼래요!</span>
           </div>
-        </section>
-        <section className={styles.cardsection}>
-          {cards?.map((card) => (
-            <Card key={card.id} list={card} />
-          ))}
-        </section>
-      </article>
-    </Suspense>
+          <ul className={styles.selectlist}>
+            <li>
+              <span
+                className={filterState === 'imminent' ? styles.isSelected : styles.select}
+                onClick={() => imminentFilter()}>
+                마감임박순
+              </span>
+            </li>
+            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+            <li>
+              <span
+                className={filterState === 'newest' ? styles.isSelected : styles.select}
+                onClick={() => newestFilter()}>
+                최신순
+              </span>
+            </li>
+            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+            <li>
+              <span className={styles.select}> 응원순</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+      <section className={styles.cardsection}>
+        {cards?.map((card) => (
+          <Card key={card.id} list={card} />
+        ))}
+      </section>
+    </article>
+    // </Suspense>
   );
 }
 
 export default Main;
+
+export async function getServerSideProps(context) {
+  const { id } = context.query;
+  const res = await fetchCategoryData(id);
+  const data = res;
+
+  return { props: { data } };
+}
