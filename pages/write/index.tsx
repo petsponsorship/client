@@ -12,6 +12,7 @@ function WritePage() {
 
   const api = async (data: IFormInput) => {
     data = { ...data, content: html };
+    console.log("작성데이터-->", data)
     return await writeApi(data);
   };
 

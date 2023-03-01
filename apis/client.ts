@@ -1,5 +1,6 @@
 import axios from "axios";
-import { getCookie, setCookie } from "../hook/cookies"
+import { config } from "process";
+import { getCookie, removeCookie, setCookie } from "../hook/cookies"
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -23,32 +24,28 @@ instance.interceptors.response.use(
     (res)=>{
     return res;
 },
-async (err) => {
-    const originalConfig = err.config;
-    if(err.response){
-        if(err.response.status === 401 && !originalConfig._retry){
-            originalConfig._retry = true;
+async (error) => {
 
-            try {
-                const res = await instance.post('', {
-                    headers : {
-                        RefreshToken : getCookie("refreshToken")
-                    }
-                });
-                console.log("리프레쉬 토큰",res);
-                const access = res.data.accessToken;
-                // const refresh = res.data.refreshToken;
-
-                setCookie("Authorization", access, {})
-                // setCookie()
-                return instance(originalConfig);
-            } catch (_error){
-                if(_error.response && _error.response.data) {
-                    return Promise.reject(_error.response.data);
-                }
+    if(error.config && error.response && error.response.status === 401){
+        error.config._retry = true;
+        const refreshtoken =getCookie("refreshToken");
+        error.config.headers.RefreshToken=`${refreshtoken}`
+        return axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+            headers : {
+                RefreshToken : `${refreshtoken}`
             }
-            return Promise.reject(err)
-        }
+        }).then( async(res)=>{
+            if(res.data && res.data.accessToken){
+                setCookie("Authorization",res.data.accessToken,{})
+                 const accesstoken = getCookie("Authorization")
+                 console.log("엑세스토큰발급",accesstoken )
+                error.config.headers["Authorization"] = `${accesstoken}`;
+                return instance.request(error.config)}
+        })
     }
+    return Promise.reject(error)
+
+     
+
 
 })

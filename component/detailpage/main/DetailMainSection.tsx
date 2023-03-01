@@ -2,8 +2,12 @@ import React from 'react';
 import styles from '../main/DetailMainSection.module.css';
 import ProgressBar from '../../ui/progressbar/ProgressBar';
 import { dataConverter } from '../functions';
+import { instance } from '../../../apis/client';
+import { useRouter } from 'next/router';
 
 function DetailMainSection({ data }) {
+const router = useRouter();
+const postId = router.query;
   const detail = data?.data.post;
   const {
     adopt,
@@ -21,6 +25,12 @@ function DetailMainSection({ data }) {
     targetAmount,
     thumbnail,
   } = detail;
+
+  const clickSupport = () => {
+    instance.post("/like", postId).then((res)=>{
+      console.log(res)
+    })
+  }
 
   return (
     <main className={styles.container}>
@@ -62,10 +72,10 @@ function DetailMainSection({ data }) {
             <span>공유하기</span>
           </div>
           <div className={styles.btn}>
-            <button className={styles.circleBtn}>
+            <button className={styles.circleBtn} onClick={()=>clickSupport()}>
               <span>👏</span>
             </button>
-            <span>응원하기</span>
+            <span onClick={()=>clickSupport()}>응원하기</span>
           </div>
           <button>후원하기</button>
           {adopt ? <button>입양문의</button> : null}
