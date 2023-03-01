@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import styles from '../write/WriteMainSection.module.css';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { AGE_UNIT_ARRAY, SEX_ARRAY } from './constants';
+import { AGE_UNIT_ARRAY, SEX_ARRAY } from '../../../helpers/constants';
+import { dataConverter } from '../../../helpers/functions';
 export interface IFormInput {
   thumbnail: File;
   name: string;
   age: number;
   species: '강아지' | '고양이' | '기타';
   etcDetail?: string;
-  sex: '0' | '1' | boolean;
+  sex: '0' | '1' | '남아' | '여아' | boolean;
   neutered: boolean;
   targetAmount: number;
   purpose: 'medical' | 'food' | 'care' | 'funeral';
@@ -20,17 +21,9 @@ function WriteMainSection({ mutate }) {
   const today = new Date().toISOString().slice(0, 10);
   const { register, handleSubmit, watch } = useForm<IFormInput>();
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    if (unit === '-1') {
-      data.age = -1;
-    } else if (unit === 'month') {
-      data.age = Number(data.age) * 0.01;
-    } else {
-      data.age = Number(data.age);
-    }
-
-    data.sex === '0' ? (data.sex = false) : (data.sex = true);
+    data.age = dataConverter.unit(unit, data.age);
+    data.sex = dataConverter.sex(data.sex);
     data.thumbnail = data.thumbnail[0];
-
     mutate(data);
   };
 

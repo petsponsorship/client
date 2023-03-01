@@ -1,21 +1,17 @@
 import React from 'react';
 import styles from '../main/DetailMainSection.module.css';
 import ProgressBar from '../../ui/progressbar/ProgressBar';
-import { dataConverter } from '../functions';
 import { instance } from '../../../apis/client';
-import { useRouter } from 'next/router';
+import { dataConverter } from '../../../helpers/functions';
 
-function DetailMainSection({ data }) {
-const router = useRouter();
-const postId = router.query;
-  const detail = data?.data.post;
+function DetailMainSection({ detailData }) {
   const {
     adopt,
     age,
     amount,
     createdAt,
     etcDetail,
-    expired,
+    expiredAt,
     name,
     neutered,
     purpose,
@@ -24,7 +20,7 @@ const postId = router.query;
     sponsor,
     targetAmount,
     thumbnail,
-  } = detail;
+  } = detailData.data.post;
 
   const clickSupport = () => {
     instance.post("/like", postId).then((res)=>{
@@ -45,7 +41,9 @@ const postId = router.query;
       <section className={styles.rightsection}>
         <div className={styles.flexdiv}>
           <h2>{name}</h2>
-          <span>후원기간 2022-02-01 ~ 2022-02-15</span>
+          <span>
+            후원기간 {dataConverter.period(createdAt)} ~ {dataConverter.period(expiredAt)}
+          </span>
         </div>
         <div className={styles.text}>
           <p>
