@@ -13,7 +13,6 @@ function WritePage() {
 
   const api = async (data: IFormInput) => {
     data = { ...data, content: html };
-    console.log('작성api', data);
     return await writeApi(data);
   };
 
@@ -29,9 +28,6 @@ function WritePage() {
     <>
       <WriteMainSection mutate={mutate} />
       <hr />
-      <button type="submit" form="write">
-        onSubmit
-      </button>
       <QuillEditor setHtml={setHtml} html={html} />
     </>
   );

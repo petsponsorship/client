@@ -11,7 +11,6 @@ function Detail() {
 
   const { data: detailData } = useQuery(['detail', id], () => getPostDataApi(id));
 
-  console.log('detailData', detailData);
   return (
     <>
       {detailData && <DetailMainSection detailData={detailData} />}

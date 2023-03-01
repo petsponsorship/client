@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../main/DetailMainSection.module.css';
 import ProgressBar from '../../ui/progressbar/ProgressBar';
-import { dataConverter } from '../functions';
+import { dataConverter } from '../../../helpers/functions';
 
 function DetailMainSection({ detailData }) {
   const {
