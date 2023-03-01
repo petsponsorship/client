@@ -10,3 +10,9 @@ export const writeApi = async (data: IFormInput) => {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
 };
+
+export const imageApi = async (data: { img: File }) => {
+  return instance.post(`${process.env.NEXT_PUBLIC_API_URL}/posts/img`, data, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};

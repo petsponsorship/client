@@ -11,4 +11,5 @@ export const dataConverter = {
   },
   targetAmount: (target) => (target * 10000).toLocaleString(),
   progress: (amount, target) => (amount / target) * 100,
+  period: (date) => date.substring(0, 10),
 };

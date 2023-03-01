@@ -3,15 +3,14 @@ import styles from '../main/DetailMainSection.module.css';
 import ProgressBar from '../../ui/progressbar/ProgressBar';
 import { dataConverter } from '../functions';
 
-function DetailMainSection({ data }) {
-  const detail = data?.data.post;
+function DetailMainSection({ detailData }) {
   const {
     adopt,
     age,
     amount,
     createdAt,
     etcDetail,
-    expired,
+    expiredAt,
     name,
     neutered,
     purpose,
@@ -20,7 +19,7 @@ function DetailMainSection({ data }) {
     sponsor,
     targetAmount,
     thumbnail,
-  } = detail;
+  } = detailData.data.post;
 
   return (
     <main className={styles.container}>
@@ -35,7 +34,9 @@ function DetailMainSection({ data }) {
       <section className={styles.rightsection}>
         <div className={styles.flexdiv}>
           <h2>{name}</h2>
-          <span>후원기간 2022-02-01 ~ 2022-02-15</span>
+          <span>
+            후원기간 {dataConverter.period(createdAt)} ~ {dataConverter.period(expiredAt)}
+          </span>
         </div>
         <div className={styles.text}>
           <p>
