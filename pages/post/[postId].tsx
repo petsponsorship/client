@@ -9,6 +9,7 @@ function Detail() {
   const id = router.asPath.replace(/[^0-9]/g, '');
 
   const { data } = useQuery(['detail', id], () => getPostDataApi(id));
+  console.log("디테일",data);
 
   return (
     <>

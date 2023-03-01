@@ -21,9 +21,9 @@ function login () {
         const handleLoginClick = () => {
             loginApi(userInfo.email, userInfo.password)
             .then((res)=>{
-                 console.log(res.data.token);
-                setCookie("user", JSON.stringify(res.data.token), {
-                });
+                setCookie("Authorization", res.data.accessToken, {});
+                setCookie("refreshToken", res.data.refreshToken, {})
+                setCookie("userId", res.data.userId, {})
                 alert("로그인성공");
                 router.push("/")
             })

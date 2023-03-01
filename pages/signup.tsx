@@ -2,6 +2,7 @@ import React from "react";
 import styles from "../styles/Signup.module.css"
 import useSignForm from "../hook/useSignForm.js"
 import { signUpApi } from "../apis/auth";
+import { useRouter } from "next/router";
 
 function signup() {
 
@@ -18,12 +19,15 @@ function signup() {
         phoneNumberWarnList,
       } = useSignForm();
 
+      const router = useRouter();
+
       const handleSignupClick = (e) => {
         e.preventDefault();
         signUpApi(userInfo.email, userInfo.password, userInfo.name, userInfo.phoneNumber)
         .then(()=>{
             e.target.reset();
-            alert("회원가입성공")
+            alert("회원가입성공");
+            router.push("/login");
         })
         .catch((err)=> {
             alert(err)
