@@ -32,15 +32,17 @@ async (error) => {
         error.config.headers.RefreshToken=`${refreshtoken}`
         return axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
             headers : {
-                RefreshToken : `${refreshtoken}`
+                RefreshToken : `${refreshtoken}`,
+                'Content-Type': 'application/json',
+                withCredentials: true,
             }
         }).then( async(res)=>{
-            if(res.data && res.data.accessToken){
+            if(res.status === 200 && res.data.accessToken){
                 setCookie("Authorization",res.data.accessToken,{})
                  const accesstoken = getCookie("Authorization")
                  console.log("엑세스토큰발급",accesstoken )
                 error.config.headers["Authorization"] = `${accesstoken}`;
-                return instance.request(error.config)}
+                return instance(error.config)}
         })
     }
     return Promise.reject(error)
@@ -49,3 +51,27 @@ async (error) => {
 
 
 })
+
+
+axios.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      const originalRequest = error.config;
+
+      if (error.response.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true;
+
+        axios.get("/auth/token").then((res) => {
+          if (res.status === 200) {
+            console.log("Access token refreshed");
+            return axios(originalRequest);
+          }
+        });
+
+      } else {
+        return Promise.reject(error);
+      }
+    }
+  );
