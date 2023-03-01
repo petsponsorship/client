@@ -5,7 +5,8 @@ import { RecoilRoot } from 'recoil';
 import { useState } from 'react';
 import '../styles/globals.css';
 import Header from '../component/Header';
-import { parseCookies } from '../helpers/';
+
+
 
 function MyApp({ Component, pageProps }: AppProps) {
   // 이렇게 해야 서로 다른 사용자와 요청 사이에 데이터가 공유되지 않는다.

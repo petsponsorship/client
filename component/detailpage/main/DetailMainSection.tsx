@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from '../main/DetailMainSection.module.css';
 import ProgressBar from '../../ui/progressbar/ProgressBar';
+import { instance } from '../../../apis/client';
 import { dataConverter } from '../../../helpers/functions';
 
 function DetailMainSection({ detailData }) {
@@ -20,6 +21,12 @@ function DetailMainSection({ detailData }) {
     targetAmount,
     thumbnail,
   } = detailData.data.post;
+
+  const clickSupport = () => {
+    instance.post("/like", postId).then((res)=>{
+      console.log(res)
+    })
+  }
 
   return (
     <main className={styles.container}>
@@ -63,10 +70,10 @@ function DetailMainSection({ detailData }) {
             <span>공유하기</span>
           </div>
           <div className={styles.btn}>
-            <button className={styles.circleBtn}>
+            <button className={styles.circleBtn} onClick={()=>clickSupport()}>
               <span>👏</span>
             </button>
-            <span>응원하기</span>
+            <span onClick={()=>clickSupport()}>응원하기</span>
           </div>
           <button>후원하기</button>
           {adopt ? <button>입양문의</button> : null}
