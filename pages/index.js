@@ -66,6 +66,15 @@ function Main({ data }) {
     setFilterState('like');
   };
 
+  //후원달성률
+  const sponsorPerFilter = () => {
+    const sort = [...cards].slice(0).sort((a, b) => {
+      return b.sponsor - a.sponsor;
+    });
+    setCards(sort);
+    setFilterState('sponsor');
+  };
+
   //입양가능한 아이만 볼래요
   const onlyadopt = (checked, item) => {
     if (checked) {
@@ -106,7 +115,9 @@ function Main({ data }) {
               </li>
               <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
               <li>
-                <span className={styles.select} onClick={() => likeFilter()}>
+                <span
+                  className={filterState === 'like' ? styles.isSelected : styles.select}
+                  onClick={() => likeFilter()}>
                   {' '}
                   응원순
                 </span>
