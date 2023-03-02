@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../styles/Signup.module.css"
-import useSignForm from "../hook/useSignForm.js"
+import useSignForm from "../hook/useSignForm"
 import { signUpApi } from "../apis/auth";
 import { useRouter } from "next/router";
 
