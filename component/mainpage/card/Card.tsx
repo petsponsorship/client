@@ -38,7 +38,7 @@ const progressbarAmount = (targetAmount, amount) => {
             <span className={styles.participation}>{list.sponsor}명 참여</span>
             <span className={styles.period}> {dateForm(list.createdAt)}일 남음</span>
             <ProgressBar value={progressbarAmount(list.targetAmount, list.amount)}/>
-            <span className={styles.amount}>{priceForm(list.targetAmount)}원</span>
+            <span className={styles.amount}>{priceForm(list.targetAmount)} 만원</span>
         </div>
         <div className={styles.infobox}>
             <p className={styles.info}>{list.sex === 0 ? "남아" : "여아"}&nbsp;&nbsp;</p>
