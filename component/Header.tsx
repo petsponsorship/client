@@ -28,10 +28,11 @@ function Header (){
         removeCookie("refreshToken",{});
     }
 
-
-    return (<header className={styles.container}>
-    <Link href="/" className={styles.title}>
+  return (
+    <header className={styles.container}>
+      <Link href="/" className={styles.title}>
         댕도네냥
+
         </Link>
     <div className={styles.btnbox}>
     <button className={styles.bellbtn}>🔔</button>
@@ -45,13 +46,23 @@ function Header (){
         <Link href="/login" className={styles.loginbtn}>
         <div className={styles.loginbtn}>
             로그인
-            </div>
+            </button>
+            </Link>} */}
+        <Link href="/login" className={styles.loginbtn}>
+          <button className={styles.loginbtn}>로그인</button>
         </Link>
-    }
-    </div>
-    <Link href="/write"><button className={styles.postbtn}>{pathname ==="/write" ? "글작성완료" : "글쓰기" }</button></Link>
-    </div>
-    </header>)
+        {pathname === '/write' ? (
+          <button className={styles.postbtn} form="write">
+            작성 완료
+          </button>
+        ) : (
+          <Link href="/write">
+            <button className={styles.postbtn}>글쓰기</button>
+          </Link>
+        )}
+      </div>
+    </header>
+  );
 }
 
 export default Header;

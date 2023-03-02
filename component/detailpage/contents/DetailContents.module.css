@@ -1,0 +1,9 @@
+.content {
+  margin: 3rem 4rem;
+  line-height: 2rem;
+}
+
+.content h1,
+.content h2 {
+  line-height: 3rem;
+}
