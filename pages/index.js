@@ -2,8 +2,9 @@ import React, { Suspense, useCallback, useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
 import Card from '../component/mainpage/card/Card.tsx';
 import CategoryTag from '../component/mainpage/category/CategoryTag.tsx';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { categoryFilterState, getCardSelector } from '../store/CategoryList.ts';
+import { useRecoilState } from 'recoil';
+import { categoryFilterState } from '../store/CategoryList.ts';
+import { mainCardData } from '../store/MainCard.ts';
 import { fetchCategoryData } from '../apis/getMaindata.ts';
 import { useRouter } from 'next/router';
 
@@ -11,7 +12,7 @@ function Main({ data }) {
   const [cards, setCards] = useState([]);
   const [category, setCategory] = useRecoilState(categoryFilterState);
   const [filterState, setFilterState] = useState();
-
+  const [orginalData, setOriginalData] = useRecoilState(mainCardData);
   const router = useRouter();
   const categoryName = Object.keys(router.query)[0];
 
@@ -20,10 +21,13 @@ function Main({ data }) {
       const res = await fetchCategoryData('전체');
       setCategory(categoryName);
       setCards(res);
+      setOriginalData(res);
     };
 
     maindata();
   }, []);
+
+  console.log(cards);
 
   const onSelect = useCallback(async (cateName) => {
     await router.push({
@@ -54,6 +58,23 @@ function Main({ data }) {
   };
 
   //응원순
+  const likeFilter = () => {
+    const sort = [...cards].slice(0).sort((a, b) => {
+      return b.sponsor - a.sponsor;
+    });
+    setCards(sort);
+    setFilterState('like');
+  };
+
+  //입양가능한 아이만 볼래요
+  const onlyadopt = (checked, item) => {
+    if (checked) {
+      const adoptfilter = [...cards].slice(0).filter((data) => data.adopt === 1);
+      setCards(adoptfilter);
+    } else if (!checked) {
+      setCards(orginalData);
+    }
+  };
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -64,7 +85,7 @@ function Main({ data }) {
           <div className={styles.selectDiv}>
             <h2 className={styles.filterTitle}>{category}</h2>
             <div>
-              <input type="checkbox" />
+              <input type="checkbox" onClick={(e) => onlyadopt(e.target.checked, e.target.value)} />
               <span>입양 가능한 아이만 볼래요!</span>
             </div>
             <ul className={styles.selectlist}>
@@ -85,7 +106,10 @@ function Main({ data }) {
               </li>
               <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
               <li>
-                <span className={styles.select}> 응원순</span>
+                <span className={styles.select} onClick={() => likeFilter()}>
+                  {' '}
+                  응원순
+                </span>
               </li>
             </ul>
           </div>

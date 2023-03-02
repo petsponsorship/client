@@ -7,7 +7,6 @@ import { priceForm } from "../../../util/priceForm"
 
 
 function Card({list}) {
-    console.log("카드데이터", list)
 
     const speciesIcon = (species) => {
         if( species === "강아지") {
