@@ -32,7 +32,6 @@ function Header (){
     <header className={styles.container}>
       <Link href="/" className={styles.title}>
         댕도네냥
-
         </Link>
     <div className={styles.btnbox}>
     <button className={styles.bellbtn}>🔔</button>
@@ -46,11 +45,9 @@ function Header (){
         <Link href="/login" className={styles.loginbtn}>
         <div className={styles.loginbtn}>
             로그인
-            </button>
-            </Link>} */}
-        <Link href="/login" className={styles.loginbtn}>
-          <button className={styles.loginbtn}>로그인</button>
-        </Link>
+            </div>
+            </Link>} 
+            </div>
         {pathname === '/write' ? (
           <button className={styles.postbtn} form="write">
             작성 완료
@@ -62,7 +59,8 @@ function Header (){
         )}
       </div>
     </header>
-  );
+)
+
 }
 
 export default Header;
