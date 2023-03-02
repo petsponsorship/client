@@ -3,6 +3,8 @@ import styles from '../main/DetailMainSection.module.css';
 import ProgressBar from '../../ui/progressbar/ProgressBar';
 import { instance } from '../../../apis/client';
 import { dataConverter } from '../../../helpers/functions';
+import { copyUrl } from '../../../helpers/functions';
+import { getCookie } from '../../../hook/cookies';
 
 function DetailMainSection({ detailData }) {
   const {
@@ -20,22 +22,23 @@ function DetailMainSection({ detailData }) {
     sponsor,
     targetAmount,
     thumbnail,
+    userId,
   } = detailData.data.post;
 
-  const clickSupport = () => {
-    instance.post("/like", postId).then((res)=>{
-      console.log(res)
-    })
-  }
+  const isWriter = Number(getCookie('userId')) === userId;
 
   return (
     <main className={styles.container}>
       <div>
         <img alt="대표 이미지" className={styles.thumbnail} src={thumbnail} />
         <div className={styles.editSection}>
-          <p>수정</p>
-          <span>|</span>
-          <p>삭제</p>
+          {/* {isWriter && ( */}
+          <>
+            <p>수정</p>
+            <span>|</span>
+            <p>삭제</p>
+          </>
+          {/* )} */}
         </div>
       </div>
       <section className={styles.rightsection}>
@@ -58,10 +61,11 @@ function DetailMainSection({ detailData }) {
         <ProgressBar value={dataConverter.progress(amount, targetAmount)} />
         <div className={styles.donationText}>
           <span>{sponsor}명이 후원했어요!</span>
+          <span>내가 {detailData.data.supportAmountByUser}원 후원했어요.</span>
           <p>{dataConverter.progress(amount, targetAmount)}% 달성</p>
         </div>
         <section className={styles.btnSection}>
-          <div className={styles.btn}>
+          <div className={styles.btn} onClick={() => copyUrl(window.location.href)}>
             <button className={styles.circleBtn}>URL</button>
             <span>주소복사</span>
           </div>
@@ -70,10 +74,10 @@ function DetailMainSection({ detailData }) {
             <span>공유하기</span>
           </div>
           <div className={styles.btn}>
-            <button className={styles.circleBtn} onClick={()=>clickSupport()}>
+            <button className={styles.circleBtn}>
               <span>👏</span>
             </button>
-            <span onClick={()=>clickSupport()}>응원하기</span>
+            <span>응원하기</span>
           </div>
           <button>후원하기</button>
           {adopt ? <button>입양문의</button> : null}

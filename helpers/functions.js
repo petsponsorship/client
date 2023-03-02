@@ -16,11 +16,16 @@ export const dataConverter = {
     return purposeObj[purpose];
   },
   targetAmount: (target) => (target * 10000).toLocaleString(),
-  progress: (amount, target) => (amount / target) * 100,
+  progress: (amount, target) => Number(((amount / target) * 100).toFixed(1)),
   period: (date) => date.substring(0, 10),
   unit: (unit, age) => {
     if (unit === '-1') return -1;
     else if (unit === 'month') return Number(age) * 0.01;
     else return Number(age);
   },
+};
+
+export const copyUrl = async (url) => {
+  await navigator.clipboard.writeText(url);
+  alert('주소가 클립보드에 복사되었습니다.');
 };
