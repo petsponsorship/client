@@ -1,11 +1,10 @@
 .list {
     display: flex;
-    align-items: center;
-    margin:2vh 38%;
+    margin-left: 2vw;
     }
     
     .categorybtn {
-      width: 6vw;
+      width: 5vw;
       height: 5vh;
       margin-left: 10px;
       margin-bottom: 2vh;
