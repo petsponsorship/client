@@ -38,3 +38,7 @@ Input[type='radio'],
 Input[type='checkbox'] {
   accent-color: black;
 }
+
+.ql-editor {
+  min-height: 30vh;
+}
