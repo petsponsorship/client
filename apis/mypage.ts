@@ -1,5 +1,8 @@
 import { instance } from "./client"
 
+export const getAllNumDataApi = async () => {
+    return await instance.get(`${process.env.NEXT_PUBLIC_API_URL}/my`)
+}
 
 export const getMyWriteListApi = async(userId : number) => {
     return await instance.get(`${process.env.NEXT_PUBLIC_API_URL}/posts?user=${userId}`)

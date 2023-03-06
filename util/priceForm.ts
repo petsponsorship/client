@@ -1,3 +1,3 @@
-export const priceForm = (price) => {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+export const priceForm = (price:number) : string=> {
+    return price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
