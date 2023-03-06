@@ -35,7 +35,10 @@ function DetailMainSection({ detailData }) {
   return (
     <main className={styles.container}>
       <div className={styles.leftSection}>
-        <img alt="대표 이미지" className={styles.thumbnail} src={thumbnail} />
+        <div className={styles.imgSection}>
+          <img alt="대표 이미지" className={styles.thumbnail} src={thumbnail} />
+          <span>{`D-${dataConverter.dday(expiredAt)}`}</span>
+        </div>
         <div className={styles.editSection}>
           <button>후원하기</button>
         </div>
@@ -54,7 +57,7 @@ function DetailMainSection({ detailData }) {
             </div>
           </div>
           {isWriter ? (
-            <div className={styles.donationText}>
+            <div className={styles.editSection}>
               <span>수정</span>
               <span>삭제</span>
             </div>

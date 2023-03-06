@@ -1,4 +1,10 @@
 export const dataConverter = {
+  dday: (date) => {
+    let today = new Date();
+    let dday = new Date(date.substring(0, 10));
+    let gap = dday.getTime() - today.getTime();
+    return Math.ceil(gap / (1000 * 60 * 60 * 24));
+  },
   age: (age) => {
     if (age === -1) return '나이 모름';
     return Number.isInteger(age) ? `${age}살` : `${age * 100}개월`;
