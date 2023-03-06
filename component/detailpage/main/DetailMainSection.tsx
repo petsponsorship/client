@@ -17,6 +17,7 @@ function DetailMainSection({ detailData }) {
     createdAt,
     etcDetail,
     expiredAt,
+    like,
     name,
     neutered,
     purpose,
@@ -27,8 +28,9 @@ function DetailMainSection({ detailData }) {
     thumbnail,
     userId,
   } = detailData.data.post;
-
+  const { supportAmountByUser, isLike } = detailData.data;
   const isWriter = Number(getCookie('userId')) === userId;
+  console.log('detailData.data', detailData.data);
 
   return (
     <main className={styles.container}>
@@ -51,11 +53,22 @@ function DetailMainSection({ detailData }) {
               <p>{neutered ? '중성화 완료' : '중성화 필요'}</p>
             </div>
           </div>
-          <div className={styles.fighting}>
-            <Image className={styles.fightingImg} src={cheer} alt="응원하기" />
-            <span>응원하기</span>
-            <p>66</p>
-          </div>
+          {isWriter ? (
+            <div className={styles.donationText}>
+              <span>수정</span>
+              <span>삭제</span>
+            </div>
+          ) : (
+            <div className={styles.fighting}>
+              <Image
+                className={`${styles.fightingImg} ${isLike && styles.fightingActive}`}
+                src={isLike ? cheerWhite : cheer}
+                alt="응원하기"
+              />
+              {isLike ? <span>응원 완료</span> : <span>응원하기</span>}
+              <p>{like}</p>
+            </div>
+          )}
         </div>
         <span className={styles.period}>
           후원기간 {dataConverter.period(createdAt)} ~ {dataConverter.period(expiredAt)}
@@ -67,16 +80,12 @@ function DetailMainSection({ detailData }) {
           </div>
           <ProgressBar value={dataConverter.progress(amount, targetAmount)} />
           <div className={styles.donationText}>
-            <span>{sponsor}명이 후원했어요!</span>
-            <span>내가 {detailData.data.supportAmountByUser}원 후원했어요.</span>
+            <span>{sponsor ? `${sponsor}명이 후원했어요!` : '아직 후원한 사람이 없어요.'}</span>
             <p>{dataConverter.progress(amount, targetAmount)}% 달성</p>
           </div>
         </div>
         <section className={styles.btnSection}>
-          <div>
-            <button>입양문의</button>
-            {adopt ? <button>입양문의</button> : null}
-          </div>
+          <div>{adopt && <button>입양문의</button>}</div>
           <div className={styles.rightBtnSection}>
             <div className={styles.btn} onClick={() => copyUrl(window.location.href)}>
               <button className={styles.circleBtn}>URL</button>
