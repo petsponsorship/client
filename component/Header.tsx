@@ -53,10 +53,14 @@ function Header (){
             로그인
             </button>
             </Link>} 
-
-            <button className={styles.postbtn} form="write">
+          {pathname === "/write" ?           
+          <button className={styles.postbtn} form="write">
+            작성 완료
+          </button>:  
+          <button className={styles.postbtn}>
            <Link href="/mypage"> 마이페이지</Link>
-          </button>
+          </button>}
+           
             </div>
     </header>
 )

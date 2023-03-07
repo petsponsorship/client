@@ -1,10 +1,10 @@
 .mypageSection {
     display: flex;
+    height: 100vh;
 }
 
 .myInfoContainer{
     width: 80%;
-    margin : auto auto;
     margin-top: 9vh;
 }
 .profilImg {
@@ -27,7 +27,7 @@
     width: 50vw;
     height: 15vh;
     background-color: lightgray;
-    margin: -17vh auto auto 20vw;
+    margin: -17vh auto auto 15vw;
     border-radius: 20px;
     display: flex;
 }
@@ -63,6 +63,11 @@
     color:blue;
     text-decoration-color: blue;
 }
+.floatingbtn {
+    position:sticky;
+    left: 1300px;
+    bottom: 30px;
+  }
 
 @media (max-width: 800px) {
     .myDataBox {
