@@ -23,13 +23,13 @@ function WriteMainSection({ mutate }) {
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     data.age = dataConverter.unit(unit, data.age);
     data.sex = dataConverter.sex(data.sex);
+    data.targetAmount = data.targetAmount * 10000;
     data.thumbnail = data.thumbnail[0];
     mutate(data);
   };
 
   const [unit, setUnit] = useState<string | undefined>();
 
-  // FIXME: 기존에 첨부된 사진이 있더라도 첨부창을 열었다가 취소하면 휘발되는 문제
   let url = 'https://liftlearning.com/wp-content/uploads/2020/09/default-image.png';
   if (watch('thumbnail') && watch('thumbnail').length !== 0) url = URL.createObjectURL(watch('thumbnail')[0]);
 

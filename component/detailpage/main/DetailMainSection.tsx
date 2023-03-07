@@ -9,7 +9,7 @@ import cheerWhite from '/public/cheerwhite.png';
 import heart from '/public/heart.png';
 import Image from 'next/image';
 
-function DetailMainSection({ detailData }) {
+function DetailMainSection({ detailData, likeMutate }) {
   const {
     adopt,
     age,
@@ -17,6 +17,7 @@ function DetailMainSection({ detailData }) {
     createdAt,
     etcDetail,
     expiredAt,
+    id,
     like,
     name,
     neutered,
@@ -27,10 +28,9 @@ function DetailMainSection({ detailData }) {
     targetAmount,
     thumbnail,
     userId,
-  } = detailData.data.post;
-  const { supportAmountByUser, isLike } = detailData.data;
+  } = detailData.post;
+  const { supportAmountByUser, isLike } = detailData;
   const isWriter = Number(getCookie('userId')) === userId;
-  console.log('detailData.data', detailData.data);
 
   return (
     <main className={styles.container}>
@@ -65,16 +65,17 @@ function DetailMainSection({ detailData }) {
           {isWriter ? (
             <div className={styles.editSection}>
               <span>수정</span>
+              <span>|</span>
               <span>삭제</span>
             </div>
           ) : (
-            <div className={styles.fighting}>
+            <div className={styles.fighting} onClick={() => likeMutate(id)}>
               <Image
                 className={`${styles.fightingImg} ${isLike && styles.fightingActive}`}
                 src={isLike ? cheerWhite : cheer}
                 alt="응원하기"
               />
-              {isLike ? <span>응원 완료</span> : <span>응원하기</span>}
+              {isLike ? <span>응원완료</span> : <span>응원하기</span>}
               <p>{like}</p>
             </div>
           )}
