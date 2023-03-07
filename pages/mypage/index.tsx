@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { getMySupportListApi, getMylikeListApi, getMyWriteListApi, getAllNumDataApi } from "../../apis/mypage";
+import { getCookie } from "../../hook/cookies";
 import styles from "../../styles/Mypage.module.css";
 import { priceForm } from "../../util/priceForm"
+import Link from "next/link";
 
 
-function Mypage ({data}) {
+function Mypage () {
+  const cookietoken = getCookie("Authorization");
   const [cardNumData, setCardNumData] = useState({});
   const [cardData, setCardData] = useState([]);
 
@@ -14,9 +17,12 @@ function Mypage ({data}) {
         setCardNumData(res.data);
       })
     }
+    if(cookietoken){    
+      getSupportList();
+      Numdata();} else if(!cookietoken) {
+        return;
+      }
 
-    getSupportList();
-    Numdata();
   },[])
 
 
@@ -36,7 +42,9 @@ function Mypage ({data}) {
 
 
 
-    return(<section className={styles.mypageSection}>
+    return(
+      <>
+      {cookietoken ? <section className={styles.mypageSection}>
       <header className={styles.myInfoContainer}>
         <div className={styles.profilBox}>
           <div className={styles.profilImg}/>
@@ -65,16 +73,19 @@ function Mypage ({data}) {
           </div>
         </div>
       </header>
-      {cardData?.map((card)=> {
+      <>     
+       {cardData?.map((card)=> {
         return console.log(card)
       })}
-    </section>);
+      </>
+    </section> : 
+    <>
+    <h2 className={styles.plzlogin}>로그인이 필요한페이지 입니다.</h2>
+    <p className={styles.gologin}><Link href="/login">로그인 페이지로 이동</Link></p>
+    </>}
+    </>
+    );
 
     }
 export default Mypage;
 
-
-export async function getServerSideProps(context) {
-  const cookie = await context.req ? context.req.headers.cookie : "";
-  return { props: {data: cookie}}
-}

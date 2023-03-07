@@ -12,23 +12,26 @@ function Header (){
     const pathname = router.pathname;
     const [headerLoginBtn, setHeaderLoginBtn] = useState<boolean>();
 
+    const logout = async() =>{
+
+      await logoutApi().then((res)=>{
+          return alert(res.data.message);
+      })
+      removeCookie("userId",{});
+      removeCookie("Authorization",{});
+      removeCookie("refreshToken",{});
+      setHeaderLoginBtn(false);
+  }
+
     useEffect(()=>{
         if(!getCookie("Authorization")){ return setHeaderLoginBtn(false)}
         else {
             setHeaderLoginBtn(true)
         }
         
-    },[pathname])
+    },[pathname, headerLoginBtn])
 
-    const logout = async() =>{
-
-        await logoutApi().then((res)=>{
-            return alert(res.data.message);
-        })
-        removeCookie("userId",{});
-        removeCookie("Authorization",{});
-        removeCookie("refreshToken",{});
-    }
+    
 
   return (
     <header className={styles.container}>
@@ -54,15 +57,6 @@ function Header (){
             <button className={styles.postbtn} form="write">
            <Link href="/mypage"> 마이페이지</Link>
           </button>
-            {/* {pathname === '/write' ? (
-          <button className={styles.postbtn} form="write">
-            작성 완료
-          </button>
-        ) : (
-          
-            <button className={styles.postbtn}><Link href="/write">글쓰기</Link></button>
-          
-        )} */}
             </div>
     </header>
 )

@@ -49,13 +49,20 @@
 .ment {
     margin-top: 10px;
 }
-/* .divBar {
-    height: 90%;
-    width: 0.3%;
-    background-color: black;
-    margin: auto 0;
-    border-radius: 10px;
-} */
+
+.plzlogin {
+    text-align: center;
+    margin-top: 10vh;
+}
+.gologin {
+    text-align: center;
+    margin-top: 5vh;
+    text-decoration : underline;
+}
+.gologin :hover {
+    color:blue;
+    text-decoration-color: blue;
+}
 
 @media (max-width: 800px) {
     .myDataBox {
