@@ -1,0 +1,79 @@
+.mypageSection {
+    display: flex;
+    height: 100vh;
+}
+
+.myInfoContainer{
+    width: 80%;
+    margin-top: 9vh;
+}
+.profilImg {
+    background-color: darkgrey;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+}
+.profilBox {
+    vertical-align: middle;
+    margin-left: 6vw;
+}
+
+.profilName {
+    margin-top: 2vh;
+    margin-left: 1vw;
+    width: auto;
+}
+.myDataBox {
+    width: 50vw;
+    height: 15vh;
+    background-color: lightgray;
+    margin: -17vh auto auto 15vw;
+    border-radius: 20px;
+    display: flex;
+}
+
+.pricebox {
+    width: 24%;
+    height: 100%;
+    /* background-color: aliceblue; */
+    text-align: center;
+    padding-top: 30px;
+}
+
+.price {
+    margin-bottom: 25px;
+    font-weight: 800;
+    font-size: large;
+}
+
+.ment {
+    margin-top: 10px;
+}
+
+.plzlogin {
+    text-align: center;
+    margin-top: 10vh;
+}
+.gologin {
+    text-align: center;
+    margin-top: 5vh;
+    text-decoration : underline;
+}
+.gologin :hover {
+    color:blue;
+    text-decoration-color: blue;
+}
+.floatingbtn {
+    position:sticky;
+    left: 1300px;
+    bottom: 30px;
+  }
+
+@media (max-width: 800px) {
+    .myDataBox {
+      margin: -17vh auto auto  20vw;
+    }
+    .profilBox {
+     margin-left: 2vw;
+    }
+  }
