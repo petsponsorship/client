@@ -4,9 +4,34 @@ import ProgressBar from "../../ui/progressbar/ProgressBar"
 import Link from "next/link";
 import { dateForm } from "../../../util/dateForm";
 import { priceForm } from "../../../util/priceForm"
+import Image from "next/image";
+import MedicalImg from "../../../public/Image/medical.png"
+import FoodImg from "../../../public/Image/food.png"
+import Funeral from "../../../public/Image/funeral.png"
+
 
 
 function Card({list}) {
+    console.log(list.purpose)
+    // ('medical'|'food'|'care'|'funeral')
+    const purposegoal = (purpose):React.ReactElement<any, string | React.JSXElementConstructor<any>> => {
+        switch (purpose){
+            case "medical" :
+               return <Image src={MedicalImg} alt="의료비" width={30} height={30}></Image>
+            case "food" :
+                return <Image src={FoodImg} alt="사료비" width={30} height={30}></Image>
+            case "care" : 
+                // <Image src="../../../public/Image/"></Image>
+               return  <div></div>
+            case "funeral" : 
+            return <Image src={Funeral} alt="장례비" width={30} height={30}></Image>
+
+            default: "";
+
+        }
+
+        
+    }
 
     const speciesIcon = (species) => {
         if( species === "강아지") {
@@ -28,12 +53,15 @@ const progressbarAmount = (targetAmount, amount) => {
         <Link href={{
             pathname: `/post/${list.id}`
         }}>
+            
     <div className={styles.cardContainer}> 
+    
         <img
         className={styles.titleimg}
         alt="preview"
         src={list.thumbnail}
         />
+        <div className={styles.purposeIcon}>{purposegoal(list.purpose)}</div>
         <div>
             <span className={styles.participation}>{list.sponsor}명 참여</span>
             <span className={styles.period}> {dateForm(list.createdAt)}일 남음</span>

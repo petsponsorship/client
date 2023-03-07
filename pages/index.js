@@ -16,6 +16,7 @@ function Main({ data }) {
   const [category, setCategory] = useRecoilState(categoryFilterState);
   const [filterState, setFilterState] = useState();
   const [orginalData, setOriginalData] = useRecoilState(mainCardData);
+
   const router = useRouter();
   const categoryName = Object.keys(router.query)[0];
 
@@ -29,8 +30,6 @@ function Main({ data }) {
 
     maindata();
   }, []);
-
-  console.log(cards);
 
   const onSelect = useCallback(async (cateName) => {
     await router.push({
@@ -92,10 +91,10 @@ function Main({ data }) {
     <Suspense fallback={<div>Loading...</div>}>
       <article>
         <div className={styles.adbox}>슬라이드</div>
-        <section>
+        <hr className={styles.divline} />
+        <section className={styles.selectContainer}>
           <CategoryTag category={category} onSelect={onSelect} />
           <div className={styles.selectDiv}>
-            <h2 className={styles.filterTitle}>{category}</h2>
             <div>
               <input type="checkbox" onClick={(e) => onlyadopt(e.target.checked, e.target.value)} />
               <span>입양 가능한 아이만 볼래요!</span>

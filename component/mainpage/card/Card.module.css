@@ -1,3 +1,9 @@
+.purposeIcon {
+    position: relative;
+    bottom: 19vh;
+    left: 12vw;
+}
+
 .cardContainer {
     width: 16vw;
     height: 40vh;
