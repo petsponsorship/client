@@ -7,6 +7,9 @@ import { categoryFilterState } from '../store/CategoryList.ts';
 import { mainCardData } from '../store/MainCard.ts';
 import { fetchCategoryData } from '../apis/getMaindata.ts';
 import { useRouter } from 'next/router';
+import floating from '../public/Image/floating.png';
+import Image from 'next/image';
+import Link from 'next/link';
 
 function Main({ data }) {
   const [cards, setCards] = useState([]);
@@ -129,6 +132,9 @@ function Main({ data }) {
             <Card key={card.id} list={card} />
           ))}
         </section>
+        <Link href="/write">
+          <Image alt="floating write btn" src={floating} width={70} height={70} className={styles.floatingbtn} />
+        </Link>
       </article>
     </Suspense>
   );

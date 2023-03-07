@@ -1,0 +1,17 @@
+.container {
+    width: 30vw;
+    height: 70vh;
+    border-radius: 20px;
+    margin: auto;
+    background-color: antiquewhite;
+    text-align: center;
+    padding: 30px;
+}
+
+.pricebtn {
+    width: 70%;
+    height: 5vh;
+    margin-top: 3vh;
+    border-radius: 8px;
+    border: lightgray 2px solid;
+}

@@ -1,5 +1,7 @@
 import axios from "axios";
+
 import { getCookie, removeCookie, setCookie } from "../hook/cookies"
+
 
 export const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,

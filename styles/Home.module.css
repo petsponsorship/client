@@ -50,3 +50,9 @@
   overflow-x:hidden; 
   overflow-y:auto;
 }
+
+.floatingbtn {
+  position:sticky;
+  left: 1300px;
+  bottom: 30px;
+}
