@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from '../main/DetailMainSection.module.css';
 import ProgressBar from '../../ui/progressbar/ProgressBar';
-import { instance } from '../../../apis/client';
 import { dataConverter } from '../../../helpers/functions';
 import { copyUrl } from '../../../helpers/functions';
 import { getCookie } from '../../../hook/cookies';
 import cheer from '/public/cheer.png';
 import cheerWhite from '/public/cheerwhite.png';
+import heart from '/public/heart.png';
 import Image from 'next/image';
 
 function DetailMainSection({ detailData }) {
@@ -39,8 +39,14 @@ function DetailMainSection({ detailData }) {
           <img alt="대표 이미지" className={styles.thumbnail} src={thumbnail} />
           <span>{`D-${dataConverter.dday(expiredAt)}`}</span>
         </div>
-        <div className={styles.editSection}>
-          <button>후원하기</button>
+        <div className={styles.donationSection}>
+          <button>
+            <Image src={heart} alt="하트" />
+            <span>{supportAmountByUser ? '추가로 후원하기' : '후원하기'}</span>
+          </button>
+          {supportAmountByUser ? (
+            <span>{`현재 ${dataConverter.targetAmount(supportAmountByUser)}원을 후원했어요`}</span>
+          ) : null}
         </div>
       </div>
       <section className={styles.rightSection}>
