@@ -1,4 +1,10 @@
 export const dataConverter = {
+  dday: (date) => {
+    let today = new Date();
+    let dday = new Date(date.substring(0, 10));
+    let gap = dday.getTime() - today.getTime();
+    return Math.ceil(gap / (1000 * 60 * 60 * 24));
+  },
   age: (age) => {
     if (age === -1) return '나이 모름';
     return Number.isInteger(age) ? `${age}살` : `${age * 100}개월`;
@@ -16,11 +22,16 @@ export const dataConverter = {
     return purposeObj[purpose];
   },
   targetAmount: (target) => (target * 10000).toLocaleString(),
-  progress: (amount, target) => (amount / target) * 100,
+  progress: (amount, target) => Number(((amount / target) * 100).toFixed(1)),
   period: (date) => date.substring(0, 10),
   unit: (unit, age) => {
     if (unit === '-1') return -1;
     else if (unit === 'month') return Number(age) * 0.01;
     else return Number(age);
   },
+};
+
+export const copyUrl = async (url) => {
+  await navigator.clipboard.writeText(url);
+  alert('주소가 클립보드에 복사되었습니다.');
 };
