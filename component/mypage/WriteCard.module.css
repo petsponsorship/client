@@ -1,0 +1,71 @@
+.container {
+    width: 45vw;
+    height: 30vh;
+    border: 1px grey solid;
+    border-radius: 10px;
+    margin: 2vh auto;
+    padding: 20px;
+    display: flex;
+}
+
+.img {
+    margin: 5vh 1vw auto 1vw;
+}
+
+.contentDiv {
+    margin-left: 3vw;
+    width: 30vw;
+    padding: 20px;
+}
+
+.name {
+    margin-bottom: 3.5vh;
+    display: flex;
+}
+
+.detail {
+   margin : 7px 0 0 10px;
+   font-size: 14px;
+}
+
+.participant{
+  
+    margin-left: 10px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.price {
+    margin-top: 5px;
+    float: right;
+    color: grey;
+    font-size: 14px;
+}
+
+.btnbox{
+    margin-top: 5vh;
+
+}
+
+.endbtn {
+    width: 10vw;
+    height: 5vh;
+    margin-right: 2vw;
+    border-radius: 10px;
+    border: none;
+    background-color: #AFAFAF;
+    color: #414141;
+    font-size: 16px;
+}
+
+.extendbtn{
+    width: 10vw;
+    height: 5vh;
+    border-radius: 10px;
+    border: none;
+    background-color: #FD8889;
+    color:white;
+    font-size: 16px;
+}
+
+

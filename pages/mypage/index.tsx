@@ -6,7 +6,8 @@ import { priceForm } from "../../util/priceForm"
 import Link from "next/link";
 import floating from "../../public/Image/floating.png"
 import Image from "next/image";
-import WriteCard from "../../component/mypage/WriteCard";
+
+import  WriteCard from "../../component/mypage/WriteCard"
 
 
 function Mypage ({cookie}) {
@@ -86,8 +87,9 @@ function Mypage ({cookie}) {
         return console.log(card)
       })}
       </>
+     
     </section>
-
+    <WriteCard />
      <Link href="/write"><Image alt="floating write btn" src={floating} width={70} height={70} className={styles.floatingbtn} /></Link>
     </>
      : 

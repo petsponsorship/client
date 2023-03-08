@@ -14,6 +14,8 @@ import product from "../../../public/Image/product.png"
 
 function Card({list}) {
 
+
+
     const purposegoal = (purpose):React.ReactElement<any, string | React.JSXElementConstructor<any>> => {
         switch (purpose){
             case "medical" :
@@ -63,7 +65,7 @@ const progressbarAmount = (targetAmount, amount) => {
         <div className={styles.purposeIcon}>{purposegoal(list.purpose)}</div>
         <div>
             <span className={styles.participation}>{list.sponsor}명 참여</span>
-            <span className={styles.period}> {dateForm(list.createdAt)}일 남음</span>
+            <span className={styles.period}> {dateForm(list.expiredAt)}일 남음</span>
             <ProgressBar value={progressbarAmount(list.targetAmount, list.amount)}/>
             <span className={styles.amount}>{priceForm(list.targetAmount)} 만원</span>
         </div>
@@ -93,7 +95,7 @@ const progressbarAmount = (targetAmount, amount) => {
                
         <div>
             <span className={styles.participation}>{list.sponsor}명 참여</span>
-            <span className={styles.period}>{dateForm(list.createdAt)}남음</span>
+            <span className={styles.period}>{dateForm(list.expiredAt)}일 남음</span>
             <ProgressBar value={progressbarAmount(list.targetAmount, list.amount)}/>
             <span className={styles.amount}>{priceForm(list.targetAmount)}원</span>
         </div>
