@@ -6,27 +6,29 @@ import { priceForm } from "../../util/priceForm"
 import Link from "next/link";
 import floating from "../../public/Image/floating.png"
 import Image from "next/image";
+import WriteCard from "../../component/mypage/WriteCard";
 
 
-function Mypage () {
-  const cookietoken = getCookie("Authorization");
+function Mypage ({cookie}) {
+
   const [cardNumData, setCardNumData] = useState({});
   const [cardData, setCardData] = useState([]);
+  
+  const Numdata = () => {
+    getAllNumDataApi().then((res)=>{
+      setCardNumData(res.data);
+    })
+  }
 
-  console.log(cardNumData)
 
   useEffect(()=>{
-    const Numdata = () => {
-      getAllNumDataApi().then((res)=>{
-        setCardNumData(res.data);
-      })
-    }
-    if(cookietoken){    
+
+    if(cookie){    
       getSupportList();
-      Numdata();} else if(!cookietoken) {
+      Numdata();} 
+      else if(!cookie) {
         return;
       }
-
   },[])
 
 
@@ -48,7 +50,7 @@ function Mypage () {
 
     return(
       <>
-      {cookietoken ? 
+      {cookie ? 
        <>
       <section className={styles.mypageSection}>
       <header className={styles.myInfoContainer}>
@@ -85,6 +87,7 @@ function Mypage () {
       })}
       </>
     </section>
+
      <Link href="/write"><Image alt="floating write btn" src={floating} width={70} height={70} className={styles.floatingbtn} /></Link>
     </>
      : 
@@ -98,3 +101,14 @@ function Mypage () {
     }
 export default Mypage;
 
+//서버사이드랜더링으로 토큰 확인하거나 받아오기
+//만약 토큰이 없는경우 재할당통해 토큰이 없음을 띄워주기 null 
+
+export async function getServerSideProps(context) {
+    const iscookie = context.req ? context.req.headers.cookie : null;
+  const cookie = iscookie ? iscookie : null;
+
+  return {
+    props: {cookie:cookie},
+  };
+};

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../main/DetailMainSection.module.css';
 import ProgressBar from '../../ui/progressbar/ProgressBar';
 import { dataConverter } from '../../../helpers/functions';
@@ -8,6 +8,7 @@ import cheer from '/public/cheer.png';
 import cheerWhite from '/public/cheerwhite.png';
 import heart from '/public/heart.png';
 import Image from 'next/image';
+import Supportmodal from '../../supportmodal/support/Supportmodal';
 
 function DetailMainSection({ detailData }) {
   const {
@@ -32,6 +33,12 @@ function DetailMainSection({ detailData }) {
   const isWriter = Number(getCookie('userId')) === userId;
   console.log('detailData.data', detailData.data);
 
+  //후원모달창
+  const [isModal, setIsModal] = useState<boolean>(false);
+  const openModal = () => {
+    setIsModal(true);
+  }
+
   return (
     <main className={styles.container}>
       <div className={styles.leftSection}>
@@ -39,8 +46,9 @@ function DetailMainSection({ detailData }) {
           <img alt="대표 이미지" className={styles.thumbnail} src={thumbnail} />
           <span>{`D-${dataConverter.dday(expiredAt)}`}</span>
         </div>
+        {isModal ? <Supportmodal /> : null}
         <div className={styles.donationSection}>
-          <button>
+          <button onClick={()=>openModal()} >
             <Image src={heart} alt="하트" />
             <span>{supportAmountByUser ? '추가로 후원하기' : '후원하기'}</span>
           </button>

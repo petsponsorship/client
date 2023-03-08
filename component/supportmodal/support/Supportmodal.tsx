@@ -19,7 +19,6 @@ function Supportmodal() {
         <h1>후원 금액 선택하기</h1>
             {selectPrice.map((price)=>{
                 <button
-                type="button"
                 className={styles.pricebtn}
                 key={price.name}
                 >{price.text}</button>
