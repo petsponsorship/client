@@ -198,3 +198,8 @@
 .circleBtn span {
   font-size: 1.5rem;
 }
+
+.pink :first-child {
+  color: #fba7a7;
+  font-weight: bold;
+}

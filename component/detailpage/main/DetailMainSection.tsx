@@ -30,7 +30,7 @@ function DetailMainSection({ detailData, likeMutate }) {
     userId,
   } = detailData.post;
   const { supportAmountByUser, isLike } = detailData;
-  const isWriter = Number(getCookie('userId')) === userId;
+  const invalidRequest = +getCookie('userId') === userId || !getCookie('userId');
 
   return (
     <main className={styles.container}>
@@ -62,23 +62,15 @@ function DetailMainSection({ detailData, likeMutate }) {
               <p>{neutered ? '중성화 완료' : '중성화 필요'}</p>
             </div>
           </div>
-          {isWriter ? (
-            <div className={styles.editSection}>
-              <span>수정</span>
-              <span>|</span>
-              <span>삭제</span>
-            </div>
-          ) : (
-            <div className={styles.fighting} onClick={() => likeMutate(id)}>
-              <Image
-                className={`${styles.fightingImg} ${isLike && styles.fightingActive}`}
-                src={isLike ? cheerWhite : cheer}
-                alt="응원하기"
-              />
-              {isLike ? <span>응원완료</span> : <span>응원하기</span>}
-              <p>{like}</p>
-            </div>
-          )}
+          <div className={styles.fighting} onClick={() => likeMutate({ id, invalidRequest })}>
+            <Image
+              className={`${styles.fightingImg} ${isLike && styles.fightingActive}`}
+              src={isLike ? cheerWhite : cheer}
+              alt="응원하기"
+            />
+            {isLike ? <span>응원완료</span> : <span>응원하기</span>}
+            <p>{like}</p>
+          </div>
         </div>
         <span className={styles.period}>
           후원기간 {dataConverter.period(createdAt)} ~ {dataConverter.period(expiredAt)}
@@ -89,8 +81,8 @@ function DetailMainSection({ detailData, likeMutate }) {
             <p>{dataConverter.targetAmount(targetAmount)}원</p>
           </div>
           <ProgressBar value={dataConverter.progress(amount, targetAmount)} />
-          <div className={styles.donationText}>
-            <span>{sponsor ? `${sponsor}명이 후원했어요!` : '아직 후원한 사람이 없어요.'}</span>
+          <div className={`${styles.donationText} ${sponsor && styles.pink}`}>
+            <span>{sponsor ? `${sponsor}명이 후원중이에요` : '아직 후원한 사람이 없어요.'}</span>
             <p>{dataConverter.progress(amount, targetAmount)}% 달성</p>
           </div>
         </div>

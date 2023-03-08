@@ -17,6 +17,13 @@ export const imageApi = (data: { img: File }) => {
   });
 };
 
-export const likeApi = (postId: string) => {
+export const likeApi = ({ id: postId, invalidRequest }) => {
+  if (invalidRequest) return;
   return instance.post(`${process.env.NEXT_PUBLIC_API_URL}/like`, { postId });
+};
+
+export const deleteApi = (id: number) => {
+  const deleteConfirm = confirm('게시글을 삭제하면 복구할 수 없습니다. 정말 삭제하시겠습니까?');
+  if (!deleteConfirm) return;
+  return instance.delete(`${process.env.NEXT_PUBLIC_API_URL}/posts/${id}`);
 };

@@ -2,13 +2,14 @@ import React from 'react';
 import DetailMainSection from '../../component/detailpage/main/DetailMainSection';
 import DetailContents from '../../component/detailpage/contents/DetailContents';
 import { useRouter } from 'next/router';
-import { getPostDataApi, likeApi } from '../../apis/posts';
+import { getPostDataApi, likeApi, deleteApi } from '../../apis/posts';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { options } from '../../apis/options';
+import { getCookie } from '../../hook/cookies';
 import floating from '../../public/Image/floating.png';
 import Image from 'next/image';
 import styles from '../../styles/Detail.module.css';
 import Link from 'next/link';
-import { options } from '../../apis/options';
 
 function Detail() {
   const router = useRouter();
@@ -19,17 +20,25 @@ function Detail() {
   const { mutate: likeMutate } = useMutation(likeApi, {
     onMutate: async () => {
       await queryClient.cancelQueries(['detail', id]);
-      const previousTodos = queryClient.getQueryData(['detail', id]);
+      const previousDetailData = queryClient.getQueryData(['detail', id]);
       queryClient.setQueryData(['detail', id], (prev: any) => {
+        if (prev.data.post.userId === +getCookie('userId') || !getCookie('userId')) return;
         const copyedObj = Object.assign({}, prev);
         copyedObj.data.isLike = !copyedObj.data.isLike;
         copyedObj.data.isLike ? (copyedObj.data.post.like += 1) : (copyedObj.data.post.like -= 1);
       });
-      return { previousTodos };
+      return { previousDetailData };
     },
     onError(error, variables, context: any) {
       console.log('error', error);
-      queryClient.setQueryData(['detail', id], context.previousTodo);
+      queryClient.setQueryData(['detail', id], context.previousDetailData);
+    },
+  });
+
+  const { mutate: deleteMutate } = useMutation(deleteApi, {
+    onSuccess() {
+      alert('게시글이 삭제되었습니다.');
+      router.push('/');
     },
   });
 
@@ -37,7 +46,7 @@ function Detail() {
     <>
       {detailData && <DetailMainSection detailData={detailData} likeMutate={likeMutate} />}
       <hr />
-      {detailData && <DetailContents contents={detailData['post']['content']} />}
+      {detailData && <DetailContents contents={detailData['post']} deleteMutate={deleteMutate} />}
       <Link href="/write">
         <Image alt="floating write btn" src={floating} width={70} height={70} className={styles.floatingbtn} />
       </Link>
