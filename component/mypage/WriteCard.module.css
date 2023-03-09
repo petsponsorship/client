@@ -3,17 +3,17 @@
     height: 30vh;
     border: 1px grey solid;
     border-radius: 10px;
-    margin: 2vh auto;
+    margin: -6vh auto 10vh auto;
     padding: 20px;
     display: flex;
 }
 
 .img {
-    margin: 5vh 1vw auto 1vw;
+    /* margin: 5vh 1vw auto 1vw; */
 }
 
 .contentDiv {
-    margin-left: 3vw;
+    margin-left: 2vw;
     width: 30vw;
     padding: 20px;
 }
@@ -48,7 +48,7 @@
 }
 
 .endbtn {
-    width: 10vw;
+    width: 11vw;
     height: 5vh;
     margin-right: 2vw;
     border-radius: 10px;
@@ -59,7 +59,7 @@
 }
 
 .extendbtn{
-    width: 10vw;
+    width: 11vw;
     height: 5vh;
     border-radius: 10px;
     border: none;

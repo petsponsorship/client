@@ -8,19 +8,25 @@ import floating from "../../public/Image/floating.png"
 import Image from "next/image";
 
 import  WriteCard from "../../component/mypage/WriteCard"
+import Card from "../../component/mainpage/card/Card";
 
 
 function Mypage ({cookie}) {
 
+  const userId = getCookie("userId")
+
   const [cardNumData, setCardNumData] = useState({});
   const [cardData, setCardData] = useState([]);
+  const [writeCardData, setWriteCardData] = useState([]);
+  const [isWriteList, setIsWriteList] = useState(false);
+  console.log(cardData,writeCardData)
+  console.log("isWriteList",isWriteList)
   
   const Numdata = () => {
     getAllNumDataApi().then((res)=>{
       setCardNumData(res.data);
     })
   }
-
 
   useEffect(()=>{
 
@@ -39,13 +45,23 @@ function Mypage ({cookie}) {
   const getSupportList = () => {
     getMySupportListApi().then((res)=>
     setCardData(res.data.supportList))
+    setIsWriteList(false)
   }
 
   const getLiktList = () => {
     getMylikeListApi().then((res)=>
     setCardData(res.data))
+    setIsWriteList(false)
   }
 
+  const getWriteList = async () => {
+    
+    await getMyWriteListApi(userId).then((res)=> 
+    setWriteCardData(res.data),
+    )
+    await setIsWriteList(true)
+   
+  }
 
 
 
@@ -54,7 +70,7 @@ function Mypage ({cookie}) {
       {cookie ? 
        <>
       <section className={styles.mypageSection}>
-      <header className={styles.myInfoContainer}>
+      <section className={styles.myInfoContainer}>
         <div className={styles.profilBox}>
           <div className={styles.profilImg}/>
             <p className = {styles.profilName}>{cardNumData?.userNmae} 님</p>
@@ -71,8 +87,8 @@ function Mypage ({cookie}) {
           <span className={styles.ment}>응원한</span>
           </div>
 
-          <div className={styles.pricebox}>
-          <p className={styles.price}>{cardNumData?.supportCnt}</p>
+          <div className={styles.pricebox} onClick={()=>getWriteList()}>
+          <p className={styles.price}>{cardNumData?.postCnt}</p>
           <span className={styles.ment}>작성글</span>
           </div>
 
@@ -81,15 +97,24 @@ function Mypage ({cookie}) {
           <span className={styles.ment}>후원금액</span>
           </div>
         </div>
-      </header>
-      <>     
-       {cardData?.map((card)=> {
-        return console.log(card)
-      })}
+      </section>
+      <>
+      {!isWriteList ? <>{cardData?.map((card)=> {
+        <Card list={card}/>
+      })}</>
+      : 
+      <>
+      {writeCardData.map((card)=>
+      <div className={styles.carddiv}>
+        <WriteCard card={card} />
+        </div>
+      )}
       </>
-     
+      }     
+       
+      </>
     </section>
-    <WriteCard />
+    
      <Link href="/write"><Image alt="floating write btn" src={floating} width={70} height={70} className={styles.floatingbtn} /></Link>
     </>
      : 

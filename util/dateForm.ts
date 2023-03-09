@@ -8,7 +8,7 @@ export const dateForm = (endDate: string) : number => {
         let day = ("0" + date.getDate()).slice(-2);
     
     const now = new Date(+year, +month-1, +day)
-    console.log(now)
+
 
     const enddateArr =endDate.substring(0,10).split("-");
     const newendDate = new Date(+enddateArr[0], +enddateArr[1]-1, +enddateArr[2])

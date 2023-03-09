@@ -4,6 +4,7 @@ import ProgressBar from "../../ui/progressbar/ProgressBar"
 import Link from "next/link";
 import { dateForm } from "../../../util/dateForm";
 import { priceForm } from "../../../util/priceForm"
+import { progressbarAmount } from "../../../util/progressbarAmount"
 import Image from "next/image";
 import MedicalImg from "../../../public/Image/medical.png"
 import FoodImg from "../../../public/Image/food.png"
@@ -43,11 +44,6 @@ function Card({list}) {
             return species
         }
     }
-
-
-const progressbarAmount = (targetAmount, amount) => {
-    return (amount/targetAmount) * 100
-}
 
     return (<>
         {list?.expired === 0 ? 
