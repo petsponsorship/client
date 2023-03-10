@@ -42,14 +42,14 @@ function Mypage ({cookie}) {
 
   
 
-  const getSupportList = () => {
-    getMySupportListApi().then((res)=>
+  const getSupportList = async() => {
+   await getMySupportListApi().then((res)=>
     setCardData(res.data.supportList))
     setIsWriteList(false)
   }
 
-  const getLiktList = () => {
-    getMylikeListApi().then((res)=>
+  const getLiktList = async () => {
+   await getMylikeListApi().then((res)=>
     setCardData(res.data))
     setIsWriteList(false)
   }
