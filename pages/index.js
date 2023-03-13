@@ -11,6 +11,8 @@ import floating from '../public/Image/floating.png';
 import Image from 'next/image';
 import Link from 'next/link';
 import mainAd from '../public/Image/mainAd.png';
+import Sort from '../component/mainpage/sortTag/Sort';
+import { useQuery } from '@tanstack/react-query';
 
 function Main({ data }) {
   const [cards, setCards] = useState([]);
@@ -53,13 +55,13 @@ function Main({ data }) {
   };
 
   //오래된순
-  const imminentFilter = () => {
-    const sort = [...cards].slice(0).sort((a, b) => {
-      return new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf();
-    });
-    setCards(sort);
-    setFilterState('imminent');
-  };
+  // const imminentFilter = () => {
+  //   const sort = [...cards].slice(0).sort((a, b) => {
+  //     return new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf();
+  //   });
+  //   setCards(sort);
+  //   setFilterState('imminent');
+  // };
 
   //응원순
   const likeFilter = () => {
@@ -80,67 +82,67 @@ function Main({ data }) {
   };
 
   //입양가능한 아이만 볼래요
-  const onlyadopt = (checked, item) => {
-    if (checked) {
-      const adoptfilter = [...cards].slice(0).filter((data) => data.adopt === 1);
-      setCards(adoptfilter);
-    } else if (!checked) {
-      setCards(orginalData);
-    }
-  };
+  // const onlyadopt = (checked, item) => {
+  //   if (checked) {
+  //     const adoptfilter = [...cards].slice(0).filter((data) => data.adopt === 1);
+  //     setCards(adoptfilter);
+  //   } else if (!checked) {
+  //     setCards(orginalData);
+  //   }
+  // };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <article>
-        {/* <div className={styles.adbox}> */}
-        <Image alt="mainAd" src={mainAd} width={1200} height={400} className={styles.adbox}></Image>
-        {/* </div> */}
-        <hr className={styles.divline} />
-        <section className={styles.selectContainer}>
-          <CategoryTag category={category} onSelect={onSelect} />
-          <div className={styles.selectDiv}>
-            <div>
-              <input type="checkbox" onClick={(e) => onlyadopt(e.target.checked, e.target.value)} />
-              <span>입양 가능한 아이만 볼래요!</span>
-            </div>
-            <ul className={styles.selectlist}>
-              <li>
-                <span
-                  className={filterState === 'imminent' ? styles.isSelected : styles.select}
-                  onClick={() => imminentFilter()}>
-                  마감임박순
-                </span>
-              </li>
-              <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-              <li>
-                <span
-                  className={filterState === 'newest' ? styles.isSelected : styles.select}
-                  onClick={() => newestFilter()}>
-                  최신순
-                </span>
-              </li>
-              <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-              <li>
-                <span
-                  className={filterState === 'like' ? styles.isSelected : styles.select}
-                  onClick={() => likeFilter()}>
-                  {' '}
-                  응원순
-                </span>
-              </li>
-            </ul>
+    <article>
+      {/* <div className={styles.adbox}> */}
+      <Image alt="mainAd" src={mainAd} width={1200} height={400} className={styles.adbox}></Image>
+      {/* </div> */}
+      <hr className={styles.divline} />
+      <section className={styles.selectContainer}>
+        <CategoryTag category={category} onSelect={onSelect} />
+        <div className={styles.selectDiv}>
+          <Sort cards={cards} setCards={setCards} />
+          {/* <div>
+            <input type="checkbox" onClick={(e) => onlyadopt(e.target.checked, e.target.value)} />
+            <span>입양 가능한 아이만 볼래요!</span>
           </div>
-        </section>
-        <section className={styles.cardsection}>
+          <ul className={styles.selectlist}>
+            <li>
+              <span
+                className={filterState === 'imminent' ? styles.isSelected : styles.select}
+                onClick={() => imminentFilter()}>
+                마감임박순
+              </span>
+            </li>
+            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+            <li>
+              <span
+                className={filterState === 'newest' ? styles.isSelected : styles.select}
+                onClick={() => newestFilter()}>
+                최신순
+              </span>
+            </li>
+            <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+            <li>
+              <span className={filterState === 'like' ? styles.isSelected : styles.select} onClick={() => likeFilter()}>
+                {' '}
+                응원순
+              </span>
+            </li>
+          </ul> */}
+        </div>
+      </section>
+      <section className={styles.cardsection}>
+        <Suspense fallback={<div>Loading...</div>}>
+          {/* <Card list={maincarddetail} /> */}
           {cards?.map((card) => (
             <Card key={card.id} list={card} />
           ))}
-        </section>
-        <Link href="/write">
-          <Image alt="floating write btn" src={floating} width={70} height={70} className={styles.floatingbtn} />
-        </Link>
-      </article>
-    </Suspense>
+        </Suspense>
+      </section>
+      <Link href="/write">
+        <Image alt="floating write btn" src={floating} width={70} height={70} className={styles.floatingbtn} />
+      </Link>
+    </article>
   );
 }
 
