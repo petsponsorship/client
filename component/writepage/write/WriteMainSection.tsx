@@ -2,8 +2,7 @@ import React, { useState, useRef } from 'react';
 import styles from '../write/WriteMainSection.module.css';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { AGE_UNIT_ARRAY, SEX_ARRAY } from '../../../helpers/constants';
-import { dataConverter } from '../../../helpers/functions';
-import imageCompression from 'browser-image-compression';
+import { dataConverter, getImgUpload } from '../../../helpers/functions';
 export interface IFormInput {
   thumbnail: Promise<File> | File;
   name: string;
@@ -17,12 +16,6 @@ export interface IFormInput {
   adopt: boolean;
   content: string;
 }
-
-const getImgUpload = async (image: File) => {
-  const resizingBlob = await imageCompression(image, { maxSizeMB: 0.5 });
-  const resizingFile = new File([resizingBlob], image.name, { type: image.type });
-  return resizingFile;
-};
 
 function WriteMainSection({ mutate }) {
   const today = new Date().toISOString().slice(0, 10);
