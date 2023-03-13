@@ -16,7 +16,6 @@ import product from "../../../public/Image/product.png"
 function Card({list}) {
 
 
-
     const purposegoal = (purpose):React.ReactElement<any, string | React.JSXElementConstructor<any>> => {
         switch (purpose){
             case "medical" :
