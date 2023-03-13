@@ -15,7 +15,6 @@ import product from "../../../public/Image/product.png"
 
 function Card({list}) {
 
-    console.log(list);
 
     const purposegoal = (purpose):React.ReactElement<any, string | React.JSXElementConstructor<any>> => {
         switch (purpose){
