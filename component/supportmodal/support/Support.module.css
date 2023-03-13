@@ -6,6 +6,8 @@
     background-color: antiquewhite;
     text-align: center;
     padding: 30px;
+    position: sticky;
+    right: 50%;
 }
 
 .pricebtn {

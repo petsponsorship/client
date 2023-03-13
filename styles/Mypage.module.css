@@ -1,11 +1,13 @@
 .mypageSection {
-    display: flex;
-    height: 100vh;
+    height: 50vh;
+    width: 100%;
 }
 
 .myInfoContainer{
     width: 80%;
-    margin-top: 9vh;
+    margin-top: 30vh;
+    display: flex;
+    vertical-align: middle;
 }
 .profilImg {
     background-color: darkgrey;
@@ -14,8 +16,10 @@
     border-radius: 50px;
 }
 .profilBox {
-    vertical-align: middle;
-    margin-left: 6vw;
+width: auto;
+position: relative;
+left:130px;
+bottom: 125px;
 }
 
 .profilName {
@@ -67,6 +71,9 @@
     position:sticky;
     left: 1300px;
     bottom: 30px;
+  }
+  .carddiv{
+    /* margin-top: -10vh; */
   }
 
 @media (max-width: 800px) {

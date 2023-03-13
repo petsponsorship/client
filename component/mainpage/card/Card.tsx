@@ -4,16 +4,19 @@ import ProgressBar from "../../ui/progressbar/ProgressBar"
 import Link from "next/link";
 import { dateForm } from "../../../util/dateForm";
 import { priceForm } from "../../../util/priceForm"
+import { progressbarAmount } from "../../../util/progressbarAmount"
 import Image from "next/image";
 import MedicalImg from "../../../public/Image/medical.png"
 import FoodImg from "../../../public/Image/food.png"
 import Funeral from "../../../public/Image/funeral.png"
+import product from "../../../public/Image/product.png"
 
 
 
 function Card({list}) {
-    console.log(list.purpose)
-    // ('medical'|'food'|'care'|'funeral')
+
+
+
     const purposegoal = (purpose):React.ReactElement<any, string | React.JSXElementConstructor<any>> => {
         switch (purpose){
             case "medical" :
@@ -21,8 +24,7 @@ function Card({list}) {
             case "food" :
                 return <Image src={FoodImg} alt="사료비" width={30} height={30}></Image>
             case "care" : 
-                // <Image src="../../../public/Image/"></Image>
-               return  <div></div>
+               return  <Image src={product} alt="용품비" width={30} height={30}></Image>
             case "funeral" : 
             return <Image src={Funeral} alt="장례비" width={30} height={30}></Image>
 
@@ -43,11 +45,6 @@ function Card({list}) {
         }
     }
 
-
-const progressbarAmount = (targetAmount, amount) => {
-    return (amount/targetAmount) * 100
-}
-
     return (<>
         {list?.expired === 0 ? 
         <Link href={{
@@ -64,7 +61,7 @@ const progressbarAmount = (targetAmount, amount) => {
         <div className={styles.purposeIcon}>{purposegoal(list.purpose)}</div>
         <div>
             <span className={styles.participation}>{list.sponsor}명 참여</span>
-            <span className={styles.period}> {dateForm(list.createdAt)}일 남음</span>
+            <span className={styles.period}> {dateForm(list.expiredAt)}일 남음</span>
             <ProgressBar value={progressbarAmount(list.targetAmount, list.amount)}/>
             <span className={styles.amount}>{priceForm(list.targetAmount)} 만원</span>
         </div>
@@ -94,7 +91,7 @@ const progressbarAmount = (targetAmount, amount) => {
                
         <div>
             <span className={styles.participation}>{list.sponsor}명 참여</span>
-            <span className={styles.period}>{dateForm(list.createdAt)}남음</span>
+            <span className={styles.period}>{dateForm(list.expiredAt)}일 남음</span>
             <ProgressBar value={progressbarAmount(list.targetAmount, list.amount)}/>
             <span className={styles.amount}>{priceForm(list.targetAmount)}원</span>
         </div>

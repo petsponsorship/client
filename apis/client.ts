@@ -21,37 +21,37 @@ instance.interceptors.request.use((config) =>{
     return config;
 })
 
-instance.interceptors.response.use(
-    (res)=>{
-    return res;
-},
-async (error) => {
+// instance.interceptors.response.use(
+//     (res)=>{
+//     return res;
+// },
+// async (error) => {
 
-    if(error.config && error.response && error.response.status === 401){
-        error.config._retry = true;
-        const refreshtoken =getCookie("refreshToken");
-        error.config.headers.RefreshToken=`${refreshtoken}`
-        return axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
-            headers : {
-                RefreshToken : `${refreshtoken}`,
-                'Content-Type': 'application/json',
-                withCredentials: true,
-            }
-        }).then( async(res)=>{
-            if(res.status === 200 && res.data.accessToken){
-                setCookie("Authorization",res.data.accessToken,{})
-                 const accesstoken = getCookie("Authorization")
-                 console.log("엑세스토큰발급",accesstoken )
-                error.config.headers["Authorization"] = `${accesstoken}`;
-                return instance(error.config)}
-        })
-    }
-    return Promise.reject(error)
+//     if(error.config && error.response && error.response.status === 401){
+//         error.config._retry = true;
+//         const refreshtoken =getCookie("refreshToken");
+//         error.config.headers.RefreshToken=`${refreshtoken}`
+//         return axios.get(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+//             headers : {
+//                 RefreshToken : `${refreshtoken}`,
+//                 'Content-Type': 'application/json',
+//                 withCredentials: true,
+//             }
+//         }).then( async(res)=>{
+//             if(res.status === 200 && res.data.accessToken){
+//                 setCookie("Authorization",res.data.accessToken,{})
+//                  const accesstoken = getCookie("Authorization")
+//                  console.log("엑세스토큰발급",accesstoken )
+//                 error.config.headers["Authorization"] = `${accesstoken}`;
+//                 return instance(error.config)}
+//         })
+//     }
+//     return Promise.reject(error)
 
      
 
 
-})
+// })
 
 
 axios.interceptors.response.use(

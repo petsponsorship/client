@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import floating from '../public/Image/floating.png';
 import Image from 'next/image';
 import Link from 'next/link';
+import mainAd from '../public/Image/mainAd.png';
 
 function Main({ data }) {
   const [cards, setCards] = useState([]);
@@ -26,6 +27,7 @@ function Main({ data }) {
       setCategory(categoryName);
       setCards(res);
       setOriginalData(res);
+      router.push('?전체');
     };
 
     maindata();
@@ -90,7 +92,9 @@ function Main({ data }) {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <article>
-        <div className={styles.adbox}>슬라이드</div>
+        {/* <div className={styles.adbox}> */}
+        <Image alt="mainAd" src={mainAd} width={1200} height={400} className={styles.adbox}></Image>
+        {/* </div> */}
         <hr className={styles.divline} />
         <section className={styles.selectContainer}>
           <CategoryTag category={category} onSelect={onSelect} />
