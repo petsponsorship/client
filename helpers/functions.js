@@ -21,7 +21,7 @@ export const dataConverter = {
     const purposeObj = { food: '사료 및 간식비', medical: '의료비', care: '용품비', funeral: '장례비' };
     return purposeObj[purpose];
   },
-  targetAmount: (target) => (target * 10000).toLocaleString(),
+  targetAmount: (target) => target.toLocaleString(),
   progress: (amount, target) => Number(((amount / target) * 100).toFixed(1)),
   period: (date) => date.substring(0, 10),
   unit: (unit, age) => {
