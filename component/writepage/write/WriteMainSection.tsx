@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from '../write/WriteMainSection.module.css';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { AGE_UNIT_ARRAY, SEX_ARRAY } from '../../../helpers/constants';
 import { dataConverter } from '../../../helpers/functions';
+import imageCompression from 'browser-image-compression';
 export interface IFormInput {
-  thumbnail: File;
+  thumbnail: Promise<File> | File;
   name: string;
   age: number;
   species: '강아지' | '고양이' | '기타';
@@ -17,21 +18,30 @@ export interface IFormInput {
   content: string;
 }
 
+const getImgUpload = async (image: File) => {
+  const resizingBlob = await imageCompression(image, { maxSizeMB: 0.5 });
+  const resizingFile = new File([resizingBlob], image.name, { type: image.type });
+  return resizingFile;
+};
+
 function WriteMainSection({ mutate }) {
   const today = new Date().toISOString().slice(0, 10);
   const { register, handleSubmit, watch } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    data.thumbnail = await getImgUpload(data.thumbnail[0]);
     data.age = dataConverter.unit(unit, data.age);
     data.sex = dataConverter.sex(data.sex);
     data.targetAmount = data.targetAmount * 10000;
-    data.thumbnail = data.thumbnail[0];
     mutate(data);
   };
 
+  // console.log(watch('thumbnail'));
   const [unit, setUnit] = useState<string | undefined>();
 
   let url = 'https://liftlearning.com/wp-content/uploads/2020/09/default-image.png';
-  if (watch('thumbnail') && watch('thumbnail').length !== 0) url = URL.createObjectURL(watch('thumbnail')[0]);
+  if (watch('thumbnail') && watch('thumbnail')[0]) {
+    url = URL.createObjectURL(watch('thumbnail')[0]);
+  }
 
   return (
     <form className={styles.container} id="write" onSubmit={handleSubmit(onSubmit)}>

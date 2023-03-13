@@ -13,6 +13,7 @@ function WritePage() {
 
   const api = async (data: IFormInput) => {
     data = { ...data, content: html };
+    console.log('data', data);
     return await writeApi(data);
   };
 
