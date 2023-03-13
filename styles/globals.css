@@ -34,11 +34,19 @@ ul {
   list-style: none;
 }
 
+button {
+  transition: 0.1s;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
 Input[type='radio'],
 Input[type='checkbox'] {
   accent-color: black;
 }
 
 .ql-editor {
-  min-height: 30vh;
+  min-height: 26vh;
 }

@@ -10,7 +10,7 @@ import heart from '/public/heart.png';
 import Image from 'next/image';
 import Supportmodal from '../../supportmodal/support/Supportmodal';
 
-function DetailMainSection({ detailData }) {
+function DetailMainSection({ detailData, likeMutate }) {
   const {
     adopt,
     age,
@@ -18,6 +18,7 @@ function DetailMainSection({ detailData }) {
     createdAt,
     etcDetail,
     expiredAt,
+    id,
     like,
     name,
     neutered,
@@ -28,10 +29,9 @@ function DetailMainSection({ detailData }) {
     targetAmount,
     thumbnail,
     userId,
-  } = detailData.data.post;
-  const { supportAmountByUser, isLike } = detailData.data;
-  const isWriter = Number(getCookie('userId')) === userId;
-  console.log('detailData.data', detailData.data);
+  } = detailData.post;
+  const { supportAmountByUser, isLike } = detailData;
+  const invalidRequest = +getCookie('userId') === userId || !getCookie('userId');
 
   //후원모달창
   const [isModal, setIsModal] = useState<boolean>(false);
@@ -70,22 +70,15 @@ function DetailMainSection({ detailData }) {
               <p>{neutered ? '중성화 완료' : '중성화 필요'}</p>
             </div>
           </div>
-          {isWriter ? (
-            <div className={styles.editSection}>
-              <span>수정</span>
-              <span>삭제</span>
-            </div>
-          ) : (
-            <div className={styles.fighting}>
-              <Image
-                className={`${styles.fightingImg} ${isLike && styles.fightingActive}`}
-                src={isLike ? cheerWhite : cheer}
-                alt="응원하기"
-              />
-              {isLike ? <span>응원 완료</span> : <span>응원하기</span>}
-              <p>{like}</p>
-            </div>
-          )}
+          <div className={styles.fighting} onClick={() => likeMutate({ id, invalidRequest })}>
+            <Image
+              className={`${styles.fightingImg} ${isLike && styles.fightingActive}`}
+              src={isLike ? cheerWhite : cheer}
+              alt="응원하기"
+            />
+            {isLike ? <span>응원완료</span> : <span>응원하기</span>}
+            <p>{like}</p>
+          </div>
         </div>
         <span className={styles.period}>
           후원기간 {dataConverter.period(createdAt)} ~ {dataConverter.period(expiredAt)}
@@ -96,8 +89,8 @@ function DetailMainSection({ detailData }) {
             <p>{dataConverter.targetAmount(targetAmount)}원</p>
           </div>
           <ProgressBar value={dataConverter.progress(amount, targetAmount)} />
-          <div className={styles.donationText}>
-            <span>{sponsor ? `${sponsor}명이 후원했어요!` : '아직 후원한 사람이 없어요.'}</span>
+          <div className={`${styles.donationText} ${sponsor && styles.pink}`}>
+            <span>{sponsor ? `${sponsor}명이 후원중이에요` : '아직 후원한 사람이 없어요.'}</span>
             <p>{dataConverter.progress(amount, targetAmount)}% 달성</p>
           </div>
         </div>
