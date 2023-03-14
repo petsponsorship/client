@@ -8,59 +8,65 @@ import floating from "../../public/Image/floating.png"
 import Image from "next/image";
 
 import  WriteCard from "../../component/mypage/WriteCard"
-import Card from "../../component/mainpage/card/Card";
+import { useQuery } from "@tanstack/react-query";
+import Mycard from "../../component/mypage/mycard/Mycard";
+import Myprofile from "../../component/mypage/myprofile/Myprofile";
+import { useRecoilState } from "recoil";
+import { isWriteCard, myCardData, myWriteCardData } from "../../store/mypageAtom";
 
 
 function Mypage ({cookie}) {
 
   const userId = getCookie("userId")
 
-  const [cardNumData, setCardNumData] = useState({});
-  const [cardData, setCardData] = useState([]);
-  const [writeCardData, setWriteCardData] = useState([]);
-  const [isWriteList, setIsWriteList] = useState(false);
-  console.log(cardData,writeCardData)
-  console.log("isWriteList",isWriteList)
-  
-  const Numdata = () => {
-    getAllNumDataApi().then((res)=>{
-      setCardNumData(res.data);
-    })
-  }
+  const [cardData, setCardData] = useRecoilState(myCardData);
+  const [writeCardData, setWriteCardData] = useRecoilState(myWriteCardData);
+  const [isWriteList, setIsWriteList] = useRecoilState(isWriteCard);
+
+
+  const {data: myNumData} = useQuery(["mypage"], ()=> {return getAllNumDataApi()})
+  const { data:supportList } = useQuery(["mypage", "supportlist"], ()=>{return getMySupportListApi()},{ onSuccess: (data)=> setCardData(data.data)})
+  const { data: likelist } = useQuery(["mypage", "likelist"], ()=>{return getMylikeListApi()}, { onSuccess: (data)=> setCardData(data.data) })
+  const {data: writelist} = useQuery(["mypage", "writelist"], ()=>{return getMyWriteListApi(userId)}, { onSuccess:(data)=> (setWriteCardData(data.data))})
 
   useEffect(()=>{
-
     if(cookie){    
-      getSupportList();
-      Numdata();} 
+      myNumData;} 
       else if(!cookie) {
         return;
       }
   },[])
 
 
+  const switchCardcomponent = (isWriteList):React.ReactElement<any, string | React.JSXElementConstructor<any>> => {
+    switch (isWriteList) {
+      case "write" :
+      return <>
+        {writeCardData.map((card)=>
+       ( <div className={styles.carddiv}>
+          <WriteCard card={card} key={card.id}/>
+          </div>)
+        )}
+        </>
+      case "like" : 
+       return   <>
+        {cardData.map((list)=> 
+          <div className={styles.carddiv}>
+          <Mycard list={list} key={list.postId}/>
+          </div>
+        )}
 
-  
-
-  const getSupportList = async() => {
-   await getMySupportListApi().then((res)=>
-    setCardData(res.data.supportList))
-    setIsWriteList(false)
-  }
-
-  const getLiktList = async () => {
-   await getMylikeListApi().then((res)=>
-    setCardData(res.data))
-    setIsWriteList(false)
-  }
-
-  const getWriteList = async () => {
-    
-    await getMyWriteListApi(userId).then((res)=> 
-    setWriteCardData(res.data),
-    )
-    await setIsWriteList(true)
-   
+        </>
+      case "support" :
+      return <>
+      {cardData && cardData.map((list)=>
+          <div className={styles.carddiv}>
+          <Mycard list={list} key={list.postId}/>
+          </div>
+      )}
+      </>
+      default:""
+    }
   }
 
 
@@ -70,51 +76,9 @@ function Mypage ({cookie}) {
       {cookie ? 
        <>
       <section className={styles.mypageSection}>
-      <section className={styles.myInfoContainer}>
-        <div className={styles.profilBox}>
-          <div className={styles.profilImg}/>
-            <p className = {styles.profilName}>{cardNumData?.userNmae} 님</p>
-        </div>
-
-        <div className={styles.myDataBox} onClick={()=>getSupportList()}>
-          <div className={styles.pricebox}>
-          <p className={styles.price}>{cardNumData?.supportCnt}</p>
-          <span className={styles.ment}>후원한</span>
-          </div>
-
-          <div className={styles.pricebox} onClick={()=>getLiktList()}>
-          <p className={styles.price}>{cardNumData?.likeCnt}</p>
-          <span className={styles.ment}>응원한</span>
-          </div>
-
-          <div className={styles.pricebox} onClick={()=>getWriteList()}>
-          <p className={styles.price}>{cardNumData?.postCnt}</p>
-          <span className={styles.ment}>작성글</span>
-          </div>
-
-          <div className={styles.pricebox}>
-          <p className={styles.price}>{priceForm(cardNumData?.supportTotalAmount) }</p>
-          <span className={styles.ment}>후원금액</span>
-          </div>
-        </div>
-      </section>
-      <>
-      {!isWriteList ? <>{cardData?.map((card)=> {
-        <Card list={card}/>
-      })}</>
-      : 
-      <>
-      {writeCardData.map((card)=>
-      <div className={styles.carddiv}>
-        <WriteCard card={card} />
-        </div>
-      )}
-      </>
-      }     
-       
-      </>
+        <Myprofile data={myNumData}/>
+     {switchCardcomponent(isWriteList)}  
     </section>
-    
      <Link href="/write"><Image alt="floating write btn" src={floating} width={70} height={70} className={styles.floatingbtn} /></Link>
     </>
      : 

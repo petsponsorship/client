@@ -39,6 +39,7 @@ bottom: 125px;
 .pricebox {
     width: 24%;
     height: 100%;
+    /* background-color: aliceblue; */
     text-align: center;
     padding-top: 30px;
 }
@@ -52,34 +53,3 @@ bottom: 125px;
 .ment {
     margin-top: 10px;
 }
-
-.plzlogin {
-    text-align: center;
-    margin-top: 10vh;
-}
-.gologin {
-    text-align: center;
-    margin-top: 5vh;
-    text-decoration : underline;
-}
-.gologin :hover {
-    color:blue;
-    text-decoration-color: blue;
-}
-.floatingbtn {
-    position:sticky;
-    left: 1300px;
-    bottom: 30px;
-  }
-  .carddiv{
-    /* margin-top: -10vh; */
-  }
-
-@media (max-width: 800px) {
-    .myDataBox {
-      margin: -17vh auto auto  20vw;
-    }
-    .profilBox {
-     margin-left: 2vw;
-    }
-  }
