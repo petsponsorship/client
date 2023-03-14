@@ -41,7 +41,6 @@
   justify-content: flex-end;
   color: #9e9e9e;
   margin-top: 15px;
-  box-sizing: content-box;
 }
 
 .donationSection > button {
@@ -86,6 +85,13 @@
 .text {
   line-height: 1.5rem;
   font-size: 15px;
+}
+
+.editSection {
+  display: flex;
+  color: gray;
+  gap: 10px;
+  padding-top: 10px;
 }
 
 .fighting {
@@ -191,4 +197,9 @@
 
 .circleBtn span {
   font-size: 1.5rem;
+}
+
+.pink :first-child {
+  color: #fba7a7;
+  font-weight: bold;
 }

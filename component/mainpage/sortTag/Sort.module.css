@@ -1,0 +1,14 @@
+.selectlist {
+    display: flex;
+    margin-left:2vw;
+    font-size: regular;
+    color: gray;
+ }
+ .isSelected {
+   display:flex;
+   color:black;
+   font-weight: bolder;
+ }
+ .select {
+    display:flex;
+  }
