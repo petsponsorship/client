@@ -2,12 +2,16 @@ import Image from "next/image";
 import styles from "./WriteCard.module.css"
 import { progressbarAmount } from "../../util/progressbarAmount"
 import ProgressBar from "../ui/progressbar/ProgressBar";
+import Link from "next/link";
 
 
 function WriteCard ({card}) {
 
 
     return(
+        <Link href={{
+            pathname: `/post/${card.id}`
+        }}>
     <div className={styles.container}>
         <Image alt="대표사진gg" src={card.thumbnail} width={210} height={200} className={styles.img}/>
         <div  className={styles.contentDiv}>
@@ -26,7 +30,8 @@ function WriteCard ({card}) {
             <button className={styles.extendbtn}>후원 연장하기</button>
         </div>
         </div>
-        </div>)
+        </div>
+        </Link>)
 }
 
 export default WriteCard;

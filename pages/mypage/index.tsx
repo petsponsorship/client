@@ -19,8 +19,10 @@ function Mypage ({cookie}) {
   const [cardData, setCardData] = useState([]);
   const [writeCardData, setWriteCardData] = useState([]);
   const [isWriteList, setIsWriteList] = useState(false);
-  console.log(cardData,writeCardData)
-  console.log("isWriteList",isWriteList)
+  console.log("카드데이터", cardData)
+  console.log("isWriteList", isWriteList)
+  console.log("작성카드데이터", writeCardData)
+
   
   const Numdata = () => {
     getAllNumDataApi().then((res)=>{
@@ -31,7 +33,7 @@ function Mypage ({cookie}) {
   useEffect(()=>{
 
     if(cookie){    
-      getSupportList();
+      // getSupportList();
       Numdata();} 
       else if(!cookie) {
         return;
@@ -48,19 +50,20 @@ function Mypage ({cookie}) {
     setIsWriteList(false)
   }
 
-  const getLiktList = async () => {
+  const getLikeList = async () => {
    await getMylikeListApi().then((res)=>
     setCardData(res.data))
     setIsWriteList(false)
   }
 
   const getWriteList = async () => {
-    
+    setIsWriteList(true)
     await getMyWriteListApi(userId).then((res)=> 
     setWriteCardData(res.data),
+    
     )
-    await setIsWriteList(true)
    
+    setCardData([])
   }
 
 
@@ -82,7 +85,7 @@ function Mypage ({cookie}) {
           <span className={styles.ment}>후원한</span>
           </div>
 
-          <div className={styles.pricebox} onClick={()=>getLiktList()}>
+          <div className={styles.pricebox} onClick={()=>getLikeList()}>
           <p className={styles.price}>{cardNumData?.likeCnt}</p>
           <span className={styles.ment}>응원한</span>
           </div>
@@ -99,14 +102,18 @@ function Mypage ({cookie}) {
         </div>
       </section>
       <>
-      {!isWriteList ? <>{cardData?.map((card)=> {
-        <Card list={card}/>
+      {!isWriteList ? <>{cardData.map((card)=> {
+        // console.log("맴함수안에서", card)
+        <div className={styles.carddiv}>
+        <Card list={card} key={card.postId}/>
+        </div>
+        // <div>{card.postId}</div>
       })}</>
       : 
       <>
       {writeCardData.map((card)=>
       <div className={styles.carddiv}>
-        <WriteCard card={card} />
+        <WriteCard card={card} key={card.id}/>
         </div>
       )}
       </>
