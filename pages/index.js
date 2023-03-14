@@ -40,10 +40,10 @@ function Main({ data }) {
       // suspense: true,
       enabled: true,
       // 20 second
-      staleTime: 1000 * 20,
+      // staleTime: 1000 * 20,
       // 40 second
-      cacheTime: 1000 * 40,
-      refetchOnWindowFocus: false,
+      // cacheTime: 1000 * 40,
+      // refetchOnWindowFocus: false,
     },
   );
 
