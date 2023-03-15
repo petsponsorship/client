@@ -1,14 +1,8 @@
 import { atom } from "recoil";
 
-
-export const myCardData = atom({
- key: "mypageCard",
- default: []
-})
-
-export const myWriteCardData = atom({
-    key: "myWriteCard",
-    default: []
+export const userName = atom({
+    key:"name",
+    default: "",
 })
 
 export const isWriteCard = atom({

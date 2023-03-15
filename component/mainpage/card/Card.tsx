@@ -10,6 +10,7 @@ import MedicalImg from "../../../public/Image/medical.png"
 import FoodImg from "../../../public/Image/food.png"
 import Funeral from "../../../public/Image/funeral.png"
 import product from "../../../public/Image/product.png"
+import { dataConverter } from "../../../helpers/functions";
 
 
 
@@ -53,7 +54,7 @@ function Card({list}) {
         <div className={styles.species}>{list.species}</div>
         <div className={styles.nameInfobox}>
             <p>{list.name}&nbsp;</p>
-            <p className={styles.info}>{list.sex === 0 ? "남아" : "여아"}&nbsp;&nbsp;{list.age=== -1 ? "모름" : list.age + "세"} &nbsp;&nbsp;</p>
+            <p className={styles.info}>{list.sex === 0 ? "남아" : "여아"}&nbsp;&nbsp;{list.age=== -1 ? "모름" : dataConverter.age(list.age)} &nbsp;&nbsp;</p>
         </div>
         <div className={styles.progressBox}>
         <ProgressBar value={progressbarAmount(list.targetAmount, list.amount)}/>

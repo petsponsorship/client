@@ -21,7 +21,7 @@
 .purposeIcon {
     position: relative;
     bottom: 20vh;
-    left: 13vw;
+    left: 12.5vw;
 }
 
 
@@ -45,8 +45,8 @@
     background-color: #F9F9F9;
     color: #FF9D9A;
     position: relative;
-    bottom: 89px;
-    left: 70px;
+    bottom: 65px;
+    left: 13px;
     text-align: center;
     padding: 3px;
     border-radius: 5px;
@@ -55,7 +55,7 @@
 }
 
 .nameInfobox {
-    margin-top: -9vh;
+    margin-top: -6vh;
     margin-left: 1vw;
     font-weight: 600;
     font-size: 18px;

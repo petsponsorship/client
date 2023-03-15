@@ -9,10 +9,12 @@ import MedicalImg from "../../../public/Image/medical.png"
 import FoodImg from "../../../public/Image/food.png"
 import Funeral from "../../../public/Image/funeral.png"
 import product from "../../../public/Image/product.png"
+import { dataConverter } from "../../../helpers/functions";
 
 function Mycard({list}) {
 
-    console.log("mycard", list)
+
+
 
     const purposegoal = (purpose: string):React.ReactElement<any, string | React.JSXElementConstructor<any>> => {
         switch (purpose){
@@ -33,7 +35,7 @@ function Mycard({list}) {
     }
 
     return (<Link href={{
-        pathname: `/post/${list.id}`
+        pathname: `/post/${list.postId}`
     }}>
         
 <div className={styles.cardContainer}> 
@@ -43,14 +45,13 @@ function Mycard({list}) {
     src={list.thumbnail}
     />
     <div className={styles.purposeIcon}>{purposegoal(list.purpose)}</div>
-    {/* <div className={styles.experiod}>D-{dateForm(list.expiredAt)}</div> */}
     <div className={styles.species}>{list.species}</div>
     <div className={styles.nameInfobox}>
         <p>{list.name}&nbsp;</p>
-        <p className={styles.info}>{list.sex === 0 ? "남아" : "여아"}&nbsp;&nbsp;{list.age=== -1 ? "모름" : list.age + "세"} &nbsp;&nbsp;</p>
+        <p className={styles.info}>{list.sex === 0 ? "남아" : "여아"}&nbsp;&nbsp;{list.age=== -1 ? "모름" : dataConverter.age(list.age)} &nbsp;&nbsp;</p>
     </div>
     <div className={styles.progressBox}>
-    <ProgressBar value={progressbarAmount(list.targetAmount, list.amount)}/>
+    <ProgressBar value={progressbarAmount(list.targetAmount, list.amountByPost)}/>
     <span className={styles.amount}>{priceForm(list.targetAmount)}만원</span> 
     </div>
     <div className={styles.infobox}>
