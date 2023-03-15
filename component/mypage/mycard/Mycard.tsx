@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { dateForm } from "../../../util/dateForm";
 import { priceForm } from "../../../util/priceForm";
 import { progressbarAmount } from "../../../util/progressbarAmount";
 import ProgressBar from "../../ui/progressbar/ProgressBar";

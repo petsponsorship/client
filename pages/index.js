@@ -13,13 +13,8 @@ import Link from 'next/link';
 import mainAd from '../public/Image/mainAd.png';
 import Sort from '../component/mainpage/sortTag/Sort';
 import { useQuery } from '@tanstack/react-query';
-import dynamic from 'next/dynamic';
 
 function Main({ data }) {
-  // const Card = dynamic(() => import('../component/mainpage/card/Card.tsx'), {
-  //   suspense: true,
-  //   ssr: false,
-  // });
   const [cards, setCards] = useState([]);
   const [category, setCategory] = useRecoilState(categoryFilterState);
   const [orginalData, setOriginalData] = useRecoilState(mainCardData);
@@ -43,7 +38,7 @@ function Main({ data }) {
       // staleTime: 1000 * 20,
       // 40 second
       // cacheTime: 1000 * 40,
-      // refetchOnWindowFocus: false,
+      refetchOnWindowFocus: true,
     },
   );
 
