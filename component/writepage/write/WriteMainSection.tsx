@@ -18,23 +18,27 @@ export interface IFormInput {
 }
 
 function WriteMainSection({ mutate }) {
+  let url = 'https://liftlearning.com/wp-content/uploads/2020/09/default-image.png';
+  const [unit, setUnit] = useState<string | undefined>();
+  const [thumbnailUrl, setThumbnailUrl] = useState<string>(url);
+  const [file, setFile] = useState<File>();
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setFile(file);
+      setThumbnailUrl(URL.createObjectURL(file));
+    }
+  };
+
   const today = new Date().toISOString().slice(0, 10);
   const { register, handleSubmit, watch } = useForm<IFormInput>();
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    data.thumbnail = await getImgUpload(data.thumbnail[0]);
+    data.thumbnail = await getImgUpload(file);
     data.age = dataConverter.unit(unit, data.age);
     data.sex = dataConverter.sex(data.sex);
     data.targetAmount = data.targetAmount * 10000;
     mutate(data);
-  };
-
-  let url = 'https://liftlearning.com/wp-content/uploads/2020/09/default-image.png';
-  const [unit, setUnit] = useState<string | undefined>();
-  const [thumbnailUrl, setThumbnailUrl] = useState<string>(url);
-
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) setThumbnailUrl(URL.createObjectURL(file));
   };
 
   return (
@@ -42,14 +46,7 @@ function WriteMainSection({ mutate }) {
       <section>
         <img className={styles.thumbnail} src={thumbnailUrl} />
         <div>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              handleFileUpload(e);
-              register('thumbnail', { required: true }).onChange(e);
-            }}
-          />
+          <input type="file" accept="image/*" onChange={(e) => handleFileUpload(e)} />
         </div>
       </section>
       <section className={styles.rightsection}>
