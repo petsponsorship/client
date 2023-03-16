@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import styles from '../write/WriteMainSection.module.css';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { AGE_UNIT_ARRAY, SEX_ARRAY } from '../../../helpers/constants';
@@ -28,20 +28,28 @@ function WriteMainSection({ mutate }) {
     mutate(data);
   };
 
-  // console.log(watch('thumbnail'));
-  const [unit, setUnit] = useState<string | undefined>();
-
   let url = 'https://liftlearning.com/wp-content/uploads/2020/09/default-image.png';
-  if (watch('thumbnail') && watch('thumbnail')[0]) {
-    url = URL.createObjectURL(watch('thumbnail')[0]);
-  }
+  const [unit, setUnit] = useState<string | undefined>();
+  const [thumbnailUrl, setThumbnailUrl] = useState<string>(url);
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) setThumbnailUrl(URL.createObjectURL(file));
+  };
 
   return (
     <form className={styles.container} id="write" onSubmit={handleSubmit(onSubmit)}>
       <section>
-        <img className={styles.thumbnail} src={url} />
+        <img className={styles.thumbnail} src={thumbnailUrl} />
         <div>
-          <input type="file" accept="image/*" {...register('thumbnail', { required: true })} />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              handleFileUpload(e);
+              register('thumbnail', { required: true }).onChange(e);
+            }}
+          />
         </div>
       </section>
       <section className={styles.rightsection}>
@@ -50,12 +58,10 @@ function WriteMainSection({ mutate }) {
           <input type="date" value={today} disabled />
           <span>❗️ 후원은 등록일로부터 2주간 유지됩니다</span>
         </div>
-        {/* 이름 */}
         <div className={styles.flexdiv}>
           <p>이름</p>
           <input {...register('name', { required: true, maxLength: 10 })} />
         </div>
-        {/* 나이 */}
         <div className={styles.flexdiv}>
           <p>나이</p>
           <input type="number" disabled={unit === '-1'} {...register('age', { valueAsNumber: true, max: 30 })} />
@@ -68,7 +74,6 @@ function WriteMainSection({ mutate }) {
             ))}
           </span>
         </div>
-        {/* 축종 */}
         <div className={styles.flexdiv}>
           <p>종 선택</p>
           <select name="species" {...register('species')} required>
@@ -79,7 +84,6 @@ function WriteMainSection({ mutate }) {
           </select>
           <input name="etcDetail" disabled={watch('species') !== '기타'} {...register('etcDetail')} />
         </div>
-        {/* 성별 */}
         <div className={styles.flexdiv}>
           <p>성별</p>
           {SEX_ARRAY.map((sex) => (
@@ -88,18 +92,15 @@ function WriteMainSection({ mutate }) {
               {sex.group}
             </label>
           ))}
-          {/* 중성화 여부 */}
           <label>
             <input type="checkbox" {...register('neutered')} /> 중성화 여부
           </label>
         </div>
-        {/* 목표 금액 */}
         <div className={styles.flexdiv}>
           <p>목표 금액</p>
           <input type="number" {...register('targetAmount', { required: true, valueAsNumber: true, max: 500 })} />
           <span>만 원</span>
         </div>
-        {/* 후원 목적 */}
         <div className={styles.flexdiv}>
           <p>후원 목적</p>
           <select name="purpose" {...register('purpose')} required>
@@ -109,7 +110,6 @@ function WriteMainSection({ mutate }) {
             <option value="care">용품비</option>
             <option value="funeral">장례비</option>
           </select>
-          {/* 입양 가능 여부 */}
           <label>
             <input type="checkbox" {...register('adopt')} />
             입양문의 받기
