@@ -7,7 +7,7 @@ function Sort ({cards, setCards}) {
     const [originalData, setOriginalData] = useRecoilState(mainCardData)
     const [filterState, setFilterState] = useRecoilState(SortfilterTagState)
 
-    const onlyadopt = (checked, item) => {
+    const onlyadopt = (checked: boolean, item: string) => {
         if (checked) {
           const adoptfilter = [...cards].slice(0).filter((data) => data.adopt === 1);
           setCards(adoptfilter);
@@ -44,7 +44,7 @@ function Sort ({cards, setCards}) {
     return (
         <>
         <div>
-            <input type="checkbox" onClick={(e) => onlyadopt(e.target.checked, e.target.value)} />
+            <input type="checkbox" onChange={(e) => onlyadopt(e.target.checked, e.target.value)} />
             <span>입양 가능한 아이만 볼래요!</span>
           </div>
           <ul className={styles.selectlist}>

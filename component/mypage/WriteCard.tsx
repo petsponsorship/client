@@ -3,9 +3,16 @@ import styles from "./WriteCard.module.css"
 import { progressbarAmount } from "../../util/progressbarAmount"
 import ProgressBar from "../ui/progressbar/ProgressBar";
 import Link from "next/link";
+import { putPostEndApi } from "../../apis/mypage";
 
 
 function WriteCard ({card}) {
+    console.log("작성카드",card)
+
+    const sponsorEnd = async(id: number) => {
+        confirm("후원을 종료하시겠습니까?")
+       return await putPostEndApi(id)
+    }
 
 
     return(
