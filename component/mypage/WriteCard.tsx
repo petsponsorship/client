@@ -8,6 +8,8 @@ import { putPostEndApi } from "../../apis/mypage";
 
 function WriteCard ({card}) {
 
+    console.log(card)
+
     const {thumbnail, name, age, sex, sponsor, targetAmount, amount, id } = card;
 
 
