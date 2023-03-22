@@ -15,3 +15,7 @@ export const getMySupportListApi = async () => {
 export const getMylikeListApi = async () => {
     return await instance.get(`${process.env.NEXT_PUBLIC_API_URL}/like`)
 }
+
+export const putPostEndApi = async (id : number) => {
+    return await instance.put(`${process.env.NEXT_PUBLIC_API_URL}/posts/end/${id}`)
+}
