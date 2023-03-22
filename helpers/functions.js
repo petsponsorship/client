@@ -1,3 +1,5 @@
+import imageCompression from 'browser-image-compression';
+
 export const dataConverter = {
   dday: (date) => {
     let today = new Date();
@@ -34,4 +36,10 @@ export const dataConverter = {
 export const copyUrl = async (url) => {
   await navigator.clipboard.writeText(url);
   alert('주소가 클립보드에 복사되었습니다.');
+};
+
+export const getImgUpload = async (image) => {
+  const resizingBlob = await imageCompression(image, { maxSizeMB: 0.5 });
+  const resizingFile = new File([resizingBlob], image.name, { type: image.type });
+  return resizingFile;
 };

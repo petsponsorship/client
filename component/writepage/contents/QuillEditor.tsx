@@ -3,6 +3,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useRef, useMemo } from 'react';
 import { imageApi } from '../../../apis/posts';
+import { getImgUpload } from '../../../helpers/functions';
 
 export default function QuillEditor({ html, setHtml }) {
   const quillRef = useRef(null);
@@ -13,7 +14,7 @@ export default function QuillEditor({ html, setHtml }) {
     input.setAttribute('accept', 'image/*');
     input.click();
     input.addEventListener('change', async () => {
-      const file = input.files[0];
+      const file = await getImgUpload(input.files[0]);
       try {
         const res = await imageApi({ img: file });
         const imgUrl = res.data.imgUrl;
