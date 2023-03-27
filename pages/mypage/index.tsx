@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import { getMySupportListApi, getMylikeListApi, getMyWriteListApi, getAllNumDataApi } from "../../apis/mypage";
 import { getCookie } from "../../hook/cookies";
 import styles from "../../styles/Mypage.module.css";
-import { priceForm } from "../../util/priceForm"
 import Link from "next/link";
 import floating from "../../public/Image/floating.png"
 import Image from "next/image";
-
 import  WriteCard from "../../component/mypage/WriteCard"
 import { useQuery } from "@tanstack/react-query";
 import Mycard from "../../component/mypage/mycard/Mycard";
