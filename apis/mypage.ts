@@ -19,3 +19,7 @@ export const getMylikeListApi = async () => {
 export const putPostEndApi = async (id : number) => {
     return await instance.put(`${process.env.NEXT_PUBLIC_API_URL}/posts/end/${id}`)
 }
+
+export const extendSponsor = async (id) => {
+    return await instance.post(`${process.env.NEXT_PUBLIC_API_URL}/support/extend`, {postId: id})
+}
