@@ -83,7 +83,7 @@ function Card({list}) {
              <div className={styles.cardContainer}> 
             <section className = {styles.dateContainer}>
         <img
-        className={styles.titleimg}
+        className={styles.titleimgEnd}
         alt="preview"
         src={thumbnail}
         />
