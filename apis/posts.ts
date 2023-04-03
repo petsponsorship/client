@@ -6,9 +6,7 @@ export const getPostDataApi = (id: string | string[]) => {
 };
 
 export const writeApi = (data: IFormInput) => {
-  return instance.post(`${process.env.NEXT_PUBLIC_API_URL}/posts`, data, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  return instance.post(`${process.env.NEXT_PUBLIC_API_URL}/posts`, data);
 };
 
 export const editApi = (id: string, data: IFormInput) => {
