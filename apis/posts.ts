@@ -11,6 +11,10 @@ export const writeApi = (data: IFormInput) => {
   });
 };
 
+export const editApi = (id: string, data: IFormInput) => {
+  return instance.put(`${process.env.NEXT_PUBLIC_API_URL}/posts/${id}`, data);
+};
+
 export const imageApi = (data: { img: File }) => {
   return instance.post(`${process.env.NEXT_PUBLIC_API_URL}/posts/img`, data, {
     headers: { 'Content-Type': 'multipart/form-data' },
