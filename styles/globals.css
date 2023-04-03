@@ -50,3 +50,11 @@ Input[type='checkbox'] {
 .ql-editor {
   min-height: 26vh;
 }
+
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-align-right {
+  text-align: end;
+}

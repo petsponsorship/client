@@ -42,6 +42,8 @@ function Detail() {
     },
   });
 
+  console.log('detailData', detailData);
+
   return (
     <>
       {detailData && <DetailMainSection detailData={detailData} likeMutate={likeMutate} />}

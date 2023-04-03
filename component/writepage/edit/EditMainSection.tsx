@@ -3,26 +3,14 @@ import styles from '../write/WriteMainSection.module.css';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { AGE_UNIT_ARRAY, SEX_ARRAY } from '../../../helpers/constants';
 import { dataConverter, getImgUpload } from '../../../helpers/functions';
+import { IFormInput } from '../write/WriteMainSection';
 import { imageApi } from '../../../apis/posts';
 
-export interface IFormInput {
-  thumbnail: Promise<File> | File | string;
-  name: string;
-  age: number;
-  species: '강아지' | '고양이' | '기타';
-  etcDetail?: string;
-  sex: '0' | '1' | '남아' | '여아' | boolean;
-  neutered: boolean;
-  targetAmount: number;
-  purpose: 'medical' | 'food' | 'care' | 'funeral';
-  adopt: boolean;
-  content: string;
-}
-
-function WriteMainSection({ mutate }) {
-  let url = 'https://liftlearning.com/wp-content/uploads/2020/09/default-image.png';
+function EditMainSection({ mutate, detailData }) {
+  const { adopt, age, createdAt, etcDetail, name, neutered, purpose, sex, species, targetAmount, thumbnail } =
+    detailData.data.post;
   const [unit, setUnit] = useState<string | undefined>();
-  const [thumbnailUrl, setThumbnailUrl] = useState<string>(url);
+  const [thumbnailUrl, setThumbnailUrl] = useState<string>(thumbnail);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -34,18 +22,29 @@ function WriteMainSection({ mutate }) {
     }
   };
 
-  const today = new Date().toISOString().slice(0, 10);
-  const { register, handleSubmit, watch } = useForm<IFormInput>();
+  const createDay = new Date(createdAt).toISOString().slice(0, 10);
+  const { register, handleSubmit, watch } = useForm<IFormInput>({
+    defaultValues: {
+      name,
+      species,
+      neutered,
+      targetAmount: targetAmount.toLocaleString(),
+      purpose,
+      adopt,
+      etcDetail: etcDetail || '',
+    },
+  });
+
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     data.thumbnail = thumbnailUrl;
     data.age = dataConverter.unit(unit, data.age);
     data.sex = dataConverter.sex(data.sex);
-    data.targetAmount = data.targetAmount * 10000;
+    delete data.targetAmount;
     mutate(data);
   };
 
   return (
-    <form className={styles.container} id="write" onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles.container} id="edit" onSubmit={handleSubmit(onSubmit)}>
       <section>
         <img className={styles.thumbnail} src={thumbnailUrl} />
         <div>
@@ -55,7 +54,7 @@ function WriteMainSection({ mutate }) {
       <section className={styles.rightsection}>
         <div className={styles.flexdiv}>
           <p>등록일</p>
-          <input type="date" value={today} disabled />
+          <input type="date" value={createDay} disabled />
           <span>❗️ 후원은 등록일로부터 2주간 유지됩니다</span>
         </div>
         <div className={styles.flexdiv}>
@@ -64,11 +63,25 @@ function WriteMainSection({ mutate }) {
         </div>
         <div className={styles.flexdiv}>
           <p>나이</p>
-          <input type="number" disabled={unit === '-1'} {...register('age', { valueAsNumber: true, max: 30 })} />
+          <input
+            type="number"
+            defaultValue={age !== -1 ? (Number.isInteger(age) ? age : age * 100) : null}
+            disabled={unit === '-1'}
+            {...register('age', { valueAsNumber: true, max: 30 })}
+          />
           <span>
             {AGE_UNIT_ARRAY.map((obj) => (
               <label key={obj.value}>
-                <input type="radio" name="unit" value={obj.value} onChange={(e) => setUnit(e.target.value)} required />
+                <input
+                  type="radio"
+                  name="unit"
+                  value={obj.value}
+                  onChange={(e) => setUnit(e.target.value)}
+                  defaultChecked={
+                    age === -1 ? obj.value === -1 : Number.isInteger(age) ? obj.value === 'year' : obj.value === 'month'
+                  }
+                  required
+                />
                 {obj.text}
               </label>
             ))}
@@ -86,10 +99,17 @@ function WriteMainSection({ mutate }) {
         </div>
         <div className={styles.flexdiv}>
           <p>성별</p>
-          {SEX_ARRAY.map((sex) => (
-            <label key={sex.group}>
-              <input type="radio" name="sex" value={sex.value} {...register('sex')} required />
-              {sex.group}
+          {SEX_ARRAY.map((s) => (
+            <label key={s.group}>
+              <input
+                type="radio"
+                name="sex"
+                value={s.value}
+                defaultChecked={sex ? s.value === 1 : s.value === 0}
+                {...register('sex')}
+                required
+              />
+              {s.group}
             </label>
           ))}
           <label>
@@ -98,8 +118,8 @@ function WriteMainSection({ mutate }) {
         </div>
         <div className={styles.flexdiv}>
           <p>목표 금액</p>
-          <input type="number" {...register('targetAmount', { required: true, valueAsNumber: true, max: 500 })} />
-          <span>만 원</span>
+          <input {...register('targetAmount', { required: true, valueAsNumber: true, max: 500 })} disabled />
+          <span>원</span>
         </div>
         <div className={styles.flexdiv}>
           <p>후원 목적</p>
@@ -120,4 +140,4 @@ function WriteMainSection({ mutate }) {
   );
 }
 
-export default WriteMainSection;
+export default EditMainSection;
